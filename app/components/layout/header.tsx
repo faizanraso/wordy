@@ -1,14 +1,20 @@
-import Link from "next/link";
 import React from "react";
+import Link from "next/link";
+
+import "@/public/logo.png";
 
 export default function Header() {
   return (
     <header className="bg-transparent px-2 py-1 border-b border-gray-300">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <div className="">
-            <h1 className="font-semibold text-lg">wordies</h1>
-          </div>
+          <Link href={"/"}>
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-black object-cover text-center transition duration-100 ">
+              <span className="text-xl font-mono font-semibold text-white">
+                W
+              </span>
+            </div>
+          </Link>
 
           <div className="flex items-center gap-4">
             <div className="flex gap-1">
