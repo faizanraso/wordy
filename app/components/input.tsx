@@ -1,11 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 export default function Input() {
+  const [inputValue, setInputValue] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
+
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("test");
+    setIsSuccess(true);
+    console.log("test")
   }
 
   return (
@@ -15,10 +19,16 @@ export default function Input() {
           type="text"
           autoFocus
           required
-          className="text-center font-medium text-2xl uppercase justify-center tracking-wider flex w-96 p-3 text-gray-900 border border-gray-300 rounded-lg sm:text-md focus:ring-blue-700 focus:border-blue-700"
+          className={`text-center font-medium text-2xl uppercase justify-center tracking-wider flex w-96 p-3 text-gray-900 border border-gray-300 rounded-lg
+          ${isSuccess ? "border-green-700" : "border-blue-700"} `}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
         />
         <div className="absolute top-2 right-2">
-          <button className="rounded-lg py-3 px-1" type="submit">
+          <button
+            className="rounded-full py-3 px-1 hover:bg-gray-100"
+            type="submit"
+          >
             <svg
               width="18px"
               height="18px"
