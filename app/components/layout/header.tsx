@@ -54,7 +54,7 @@ export default function Header() {
                 <svg
                   width={32}
                   height={32}
-                  stroke-width="2"
+                  strokeWidth="2"
                   viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -64,9 +64,9 @@ export default function Header() {
                   <path
                     d="M5 20v-1a7 7 0 017-7v0a7 7 0 017 7v1M12 12a4 4 0 100-8 4 4 0 000 8z"
                     stroke="#000000"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   ></path>
                 </svg>
               </Link>

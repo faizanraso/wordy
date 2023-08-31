@@ -5,11 +5,19 @@ import React, { useState } from "react";
 export default function Input() {
   const [inputValue, setInputValue] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isFailed, setIsFailed] = useState(false);
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setIsSuccess(true);
-    console.log("test")
+    setIsSuccess(false);
+    setIsFailed(false);
+    if (inputValue.toLowerCase() == "yes") {
+      setIsSuccess(true);
+      setInputValue("");
+    } else {
+      setIsFailed(true);
+      console.log("failed");
+    }
   }
 
   return (
@@ -19,8 +27,14 @@ export default function Input() {
           type="text"
           autoFocus
           required
-          className={`text-center font-medium text-2xl uppercase justify-center tracking-wider flex w-96 p-3 text-gray-900 border border-gray-300 rounded-lg
-          ${isSuccess ? "border-green-700" : "border-blue-700"} `}
+          className={`text-center font-medium text-2xl uppercase justify-center tracking-wider flex w-96 p-3 text-gray-900 border border-gray-300 rounded-lg transition duration-200
+          ${
+            isSuccess
+              ? "outline-green-700 border-green-700 shadow-md shadow-green-700/40"
+              : isFailed
+              ? "outline-red-700 border-red-700 shadow-md shadow-red-700/40"
+              : "outline-blue-700 border-gray-300"
+          } `}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
@@ -33,7 +47,7 @@ export default function Input() {
               width="18px"
               height="18px"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               color="#000000"
@@ -41,9 +55,9 @@ export default function Input() {
               <path
                 d="M3 12h18m0 0l-8.5-8.5M21 12l-8.5 8.5"
                 stroke="#000000"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               ></path>
             </svg>
           </button>
