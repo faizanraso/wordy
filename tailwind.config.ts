@@ -14,7 +14,7 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       animation: {
-        shake: "shake 0.82s cubic-bezier(.36,.07,.19,.97) both",
+        shake: "shake 0.5s cubic-bezier(.36,.07,.19,.97) both",
       },
       keyframes: {
         shake: {

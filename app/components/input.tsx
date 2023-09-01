@@ -1,24 +1,27 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 export default function Input() {
   const [inputValue, setInputValue] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const [effect, setEffect] = useState(false);
+  const [audioDom, setAdudioDom] = useState<HTMLAudioElement | null>(null);
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsSuccess(false);
     setIsFailed(false);
+
     if (inputValue.toLowerCase() == "yes") {
+      // correct.play();
       setIsSuccess(true);
       setInputValue("");
     } else {
+      // error.play();
       setEffect(true);
       setIsFailed(true);
-      console.log("failed");
     }
   }
 
