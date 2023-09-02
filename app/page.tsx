@@ -1,7 +1,13 @@
+"use client";
+
+import React, { useState } from "react";
 import Input from "./components/input";
 import Header from "./components/layout/header";
+import WordList from "./components/wordlist";
 
 export default function Home() {
+  const [userWords, setUserWords] = useState<string[]>([]);
+
   return (
     <>
       <Header />
@@ -11,7 +17,8 @@ export default function Home() {
             Topic: <span className="uppercase">TOPIC</span>
           </p>
         </div>
-        <Input />
+        <Input setUserWords={setUserWords} userWords={userWords} />
+        <WordList words={userWords} />
       </main>
     </>
   );

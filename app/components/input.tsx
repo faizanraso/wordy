@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-export default function Input() {
+export default function Input(props: { setUserWords: any; userWords: any }) {
   const [inputValue, setInputValue] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
@@ -18,6 +18,7 @@ export default function Input() {
       // correct.play();
       setIsSuccess(true);
       setInputValue("");
+      props.setUserWords([...props.userWords, inputValue.toLowerCase()]);
     } else {
       // error.play();
       setEffect(true);
@@ -36,10 +37,10 @@ export default function Input() {
             type="text"
             autoFocus
             required
-            className={`text-center font-medium text-2xl uppercase justify-center tracking-wider flex w-[350px] p-3 text-gray-900 border-2 border-gray-300 rounded-lg transition duration-200 select-none outline-none
+            className={`text-center font-medium text-2xl uppercase justify-center tracking-wider flex w-[350px] p-3 text-gray-900 border-2 border-gray-300 rounded-lg select-none outline-none transition duration-200
           ${
             isSuccess
-              ? "border-green-700 shadow-lg shadow-green-700/40 animate-none"
+              ? "border-green-700 shadow-lg shadow-green-700/40"
               : isFailed
               ? "border-red-700 shadow-lg shadow-red-700/40"
               : "outline-none border-gray-300"
