@@ -36,13 +36,13 @@ export default function Input() {
             type="text"
             autoFocus
             required
-            className={`text-center font-medium text-2xl uppercase justify-center tracking-wider flex w-96 p-3 text-gray-900 border border-gray-300 rounded-lg transition duration-200
+            className={`text-center font-medium text-2xl uppercase justify-center tracking-wider flex w-[350px] p-3 text-gray-900 border-2 border-gray-300 rounded-lg transition duration-200 select-none outline-none
           ${
             isSuccess
-              ? "outline-green-700 border-green-700 shadow-md shadow-green-700/40 animate-none"
+              ? "border-green-700 shadow-lg shadow-green-700/40 animate-none"
               : isFailed
-              ? "outline-red-700 border-red-700 shadow-md shadow-red-700/40"
-              : "outline-blue-700 border-gray-300"
+              ? "border-red-700 shadow-lg shadow-red-700/40"
+              : "outline-none border-gray-300"
           } `}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
