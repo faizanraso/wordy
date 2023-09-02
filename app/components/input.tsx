@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 export default function Input(props: { setUserWords: any; userWords: any }) {
   const [inputValue, setInputValue] = useState("");
@@ -8,6 +8,8 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   const [isFailed, setIsFailed] = useState(false);
   const [effect, setEffect] = useState(false);
   const [audioDom, setAdudioDom] = useState<HTMLAudioElement | null>(null);
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -18,11 +20,14 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
       // correct.play();
       setIsSuccess(true);
       setInputValue("");
-      props.setUserWords([...props.userWords, inputValue.toLowerCase()]);
+      props.setUserWords([inputValue.toLowerCase(), ...props.userWords]);
     } else {
       // error.play();
       setEffect(true);
       setIsFailed(true);
+    }
+    if (inputRef.current != null) {
+      inputRef.current.focus();
     }
   }
 
@@ -34,6 +39,7 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
           onAnimationEnd={() => setEffect(false)}
         >
           <input
+            ref={inputRef}
             type="text"
             autoFocus
             required
