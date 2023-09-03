@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import Input from "./components/input";
-import Header from "./components/layout/header";
-import WordList from "./components/wordlist";
-import Footer from "./components/layout/footer";
+import Input from "@/components/input";
+import Header from "@/components/layout/header";
+import WordList from "@/components/wordlist";
+import Footer from "@/components/layout/footer";
 
 export default function Home() {
   const [userWords, setUserWords] = useState<string[]>([]);

@@ -6,7 +6,7 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   const [inputValue, setInputValue] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
-  const [effect, setEffect] = useState(false);
+  const [shakeEffect, setShakeEffect] = useState(false);
   const [audioDom, setAdudioDom] = useState<HTMLAudioElement | null>(null);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -26,7 +26,7 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
       props.setUserWords([inputValue.toLowerCase(), ...props.userWords]);
     } else {
       // error.play();
-      setEffect(true);
+      setShakeEffect(true);
       setIsFailed(true);
     }
     if (inputRef.current != null) {
@@ -38,8 +38,8 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
     <div className="mb-6 relative">
       <form onSubmit={checkAnswer}>
         <div
-          className={`${effect ? "animate-shake" : "animate-none"}`}
-          onAnimationEnd={() => setEffect(false)}
+          className={`${shakeEffect ? "animate-shake" : "animate-none"}`}
+          onAnimationEnd={() => setShakeEffect(false)}
         >
           <input
             ref={inputRef}

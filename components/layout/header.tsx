@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 import "@/public/logo.png";
+import { Dialog } from "../ui/shadcn/dialog";
 
 export default function Header() {
   return (
@@ -30,6 +31,7 @@ export default function Header() {
                   <path d="M11 11h2v6h-2zm0-4h2v2h-2z" />
                 </svg>
               </Link>
+              <Dialog />
               <Link href={"/"}>
                 <svg
                   width={32}
