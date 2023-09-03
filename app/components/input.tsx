@@ -13,8 +13,11 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setIsSuccess(false);
-    setIsFailed(false);
+
+    setTimeout(() => {
+      setIsSuccess(false);
+      setIsFailed(false);
+    }, 700);
 
     if (inputValue.toLowerCase() == "yes") {
       // correct.play();
