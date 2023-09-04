@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
 
-import Info from "../ui/info";
-import Stats from "../ui/stats";
-import Profile from "../ui/profile";
+import Info from "../ui/modals/info";
+import Stats from "../ui/modals/stats";
+import Profile from "../ui/modals/profile";
 import "@/public/logo.png";
 
 export default function Header() {
