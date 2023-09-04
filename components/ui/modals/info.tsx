@@ -25,10 +25,15 @@ export default function Info() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+          <DialogTitle>How to Play</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            Welcome to Wordy! Your mission? Guess as many of the 15 words
+            related to the topic as you can, within the time limit. Your score
+            depends on accurate guesses and your speed.
+          </DialogDescription>
+          <DialogDescription>
+            Keep in mind there may be more words that you can associate with the
+            topic, but may not be one of the answers.
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
