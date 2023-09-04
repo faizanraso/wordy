@@ -7,7 +7,6 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const [shakeEffect, setShakeEffect] = useState(false);
-  const [audioDom, setAdudioDom] = useState<HTMLAudioElement | null>(null);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -20,12 +19,10 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
     }, 700);
 
     if (inputValue.toLowerCase() == "yes") {
-      // correct.play();
       setIsSuccess(true);
       setInputValue("");
       props.setUserWords([inputValue.toLowerCase(), ...props.userWords]);
     } else {
-      // error.play();
       setShakeEffect(true);
       setIsFailed(true);
     }
