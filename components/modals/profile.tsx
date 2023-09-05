@@ -40,7 +40,20 @@ export default function Profile() {
         <DialogHeader>
           <DialogTitle>Access Your Profile</DialogTitle>
           <DialogDescription>
-            <div className="flex items-center justify-center py-5">
+            <div className="flex flex-col gap-y-4 items-center justify-center py-5">
+              <Button
+                className="font-medium p-5"
+                variant="outline"
+                type="button"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Icons.google className="mr-2 h-4 w-4" />
+                )}{" "}
+                Continue With Github
+              </Button>
               <Button
                 className="font-medium p-5"
                 variant="outline"
