@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/shadcn/dialog";
+} from "@/components/ui/dialog";
 
 export default function Info() {
   return (

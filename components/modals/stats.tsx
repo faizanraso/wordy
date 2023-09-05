@@ -6,9 +6,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/shadcn/dialog";
+} from "@/components/ui/dialog";
 
-export default function Profile() {
+export default function Stats() {
   return (
     <Dialog>
       <DialogTrigger>
@@ -23,7 +23,7 @@ export default function Profile() {
           className="hover:bg-gray-200 rounded-md transition duration-100 p-1"
         >
           <path
-            d="M5 20v-1a7 7 0 017-7v0a7 7 0 017 7v1M12 12a4 4 0 100-8 4 4 0 000 8z"
+            d="M15 19H9V8.6a.6.6 0 01.6-.6h4.8a.6.6 0 01.6.6V19zM15 5H9M20.4 19H15v-3.9a.6.6 0 01.6-.6h4.8a.6.6 0 01.6.6v3.3a.6.6 0 01-.6.6zM9 19v-5.9a.6.6 0 00-.6-.6H3.6a.6.6 0 00-.6.6v5.3a.6.6 0 00.6.6H9z"
             stroke="#000000"
             strokeWidth="1.5"
             strokeLinecap="round"
