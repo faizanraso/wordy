@@ -120,7 +120,7 @@ export default function Profile() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>User's name here</DialogTitle>
+          <DialogTitle>User&apos;s name here</DialogTitle>
           <DialogDescription>Logged In</DialogDescription>
         </DialogHeader>
       </DialogContent>
