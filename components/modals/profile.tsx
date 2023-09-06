@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, useSession, signOut } from "next-auth/react";
 import {
   Dialog,
   DialogContent,
@@ -17,8 +17,6 @@ import { Icons } from "../icons/icons";
 export default function Profile() {
   const { data: session, status } = useSession();
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log(status);
 
   function loginWithGithub() {
     setIsLoading(true);
@@ -44,7 +42,7 @@ export default function Profile() {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             color="#000000"
-            className="hover:bg-gray-200 rounded-md transition duration-100 p-1"
+            className="hover:bg-gray-200 rounded-md transition duration-150 p-1"
           >
             <path
               d="M5 20v-1a7 7 0 017-7v0a7 7 0 017 7v1M12 12a4 4 0 100-8 4 4 0 000 8z"
@@ -107,7 +105,7 @@ export default function Profile() {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           color="#000000"
-          className="hover:bg-gray-200 rounded-md transition duration-100 p-1"
+          className="hover:bg-gray-200 rounded-md transition duration-150 p-1"
         >
           <path
             d="M5 20v-1a7 7 0 017-7v0a7 7 0 017 7v1M12 12a4 4 0 100-8 4 4 0 000 8z"
@@ -120,8 +118,17 @@ export default function Profile() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>User&apos;s name here</DialogTitle>
-          <DialogDescription>Logged In</DialogDescription>
+          <DialogTitle>{session.user?.name}</DialogTitle>
+          <DialogDescription>
+            <div className="flex items-center justify-center py-5">
+              <Button
+                className="bg-red-500 hover:bg-red-600 transition duration-150 text-white"
+                onClick={() => signOut()}
+              >
+                Sign Out
+              </Button>
+            </div>
+          </DialogDescription>
         </DialogHeader>
       </DialogContent>
     </Dialog>

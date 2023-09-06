@@ -43,7 +43,7 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
             type="text"
             autoFocus
             required
-            className={`text-center font-medium text-2xl uppercase justify-center tracking-wider flex w-[350px] p-3 text-gray-900 border-2 border-gray-300 rounded-lg select-none outline-none transition duration-200
+            className={`text-center font-medium text-2xl uppercase justify-center tracking-wider flex w-[350px] p-3 text-gray-900 border-2 border-gray-300 rounded-lg select-none outline-none transition duration-150
           ${
             isSuccess
               ? "border-green-700 shadow-lg shadow-green-700/40"

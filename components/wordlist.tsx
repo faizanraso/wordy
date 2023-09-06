@@ -19,7 +19,7 @@ export default function WordList(props: { words: string[] }) {
             {props.words
               ? props.words.map((word) => (
                   <li
-                    className="text-sm font-medium transition-opacity ease-in duration-200 opacity-100"
+                    className="text-sm font-medium transition-opacity ease-in duration-150 opacity-100"
                     key={word}
                   >
                     {word}

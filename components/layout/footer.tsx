@@ -13,7 +13,7 @@ export default function Footer() {
           </div>
           <div>
             <Link href={"https://github.com/faizanraso/wordy"}>
-              <div className="p-1 hover:bg-gray-200 rounded-md transition duration-100">
+              <div className="p-1 hover:bg-gray-200 rounded-md transition duration-150">
                 <svg
                   width="24px"
                   height="24px"

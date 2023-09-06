@@ -12,7 +12,7 @@ export default function Header() {
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href={"/"}>
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-black object-cover text-center transition duration-100 ">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-black object-cover text-center transition duration-150 ">
               <span className="text-xl font-mono font-semibold text-white">
                 W
               </span>
