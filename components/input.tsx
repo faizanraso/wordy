@@ -21,14 +21,14 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
 
     if (inputValue.toLowerCase() == "yes") {
       setTimeout(() => {
-        correctRef.current.play();
+        correctRef.current?.play();
       }, 100);
       setIsSuccess(true);
       setInputValue("");
       props.setUserWords([inputValue.toLowerCase(), ...props.userWords]);
     } else {
       setTimeout(() => {
-        errorRef.current.play();
+        errorRef.current?.play();
       }, 100);
       setShakeEffect(true);
       setIsFailed(true);
