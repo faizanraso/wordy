@@ -9,20 +9,34 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   const [shakeEffect, setShakeEffect] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const correct = new Audio(
+    "https://whpxtmfsvvizsvwcxgzc.supabase.co/storage/v1/object/public/audio/correct.wav"
+  );
+  const error = new Audio(
+    "https://whpxtmfsvvizsvwcxgzc.supabase.co/storage/v1/object/public/audio/error.wav"
+  );
+
+  correct.preload = "auto";
+  error.preload = "auto";
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
     setTimeout(() => {
       setIsSuccess(false);
       setIsFailed(false);
-    }, 700);
+    }, 500);
 
     if (inputValue.toLowerCase() == "yes") {
+      setTimeout(() => {
+        correct.play();
+      }, 100);
       setIsSuccess(true);
       setInputValue("");
       props.setUserWords([inputValue.toLowerCase(), ...props.userWords]);
     } else {
+      setTimeout(() => {
+        error.play();
+      }, 100);
       setShakeEffect(true);
       setIsFailed(true);
     }
