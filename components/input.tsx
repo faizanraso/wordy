@@ -9,15 +9,8 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   const [shakeEffect, setShakeEffect] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const correct = new Audio(
-    "https://whpxtmfsvvizsvwcxgzc.supabase.co/storage/v1/object/public/audio/correct.wav"
-  );
-  const error = new Audio(
-    "https://whpxtmfsvvizsvwcxgzc.supabase.co/storage/v1/object/public/audio/error.wav"
-  );
-
-  correct.preload = "auto";
-  error.preload = "auto";
+  const correctRef = useRef<HTMLAudioElement>(null);
+  const errorRef = useRef<HTMLAudioElement>(null);
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -28,14 +21,14 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
 
     if (inputValue.toLowerCase() == "yes") {
       setTimeout(() => {
-        correct.play();
+        correctRef.current.play();
       }, 100);
       setIsSuccess(true);
       setInputValue("");
       props.setUserWords([inputValue.toLowerCase(), ...props.userWords]);
     } else {
       setTimeout(() => {
-        error.play();
+        errorRef.current.play();
       }, 100);
       setShakeEffect(true);
       setIsFailed(true);
@@ -48,6 +41,24 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   return (
     <div className="mb-6 relative">
       <form onSubmit={checkAnswer}>
+        <audio
+          className="hidden"
+          ref={correctRef}
+          preload="auto"
+          autoPlay={false}
+          src={
+            "https://whpxtmfsvvizsvwcxgzc.supabase.co/storage/v1/object/public/audio/correct.wav"
+          }
+        />
+        <audio
+          className="hidden"
+          ref={errorRef}
+          preload="auto"
+          autoPlay={false}
+          src={
+            "https://whpxtmfsvvizsvwcxgzc.supabase.co/storage/v1/object/public/audio/error.wav"
+          }
+        />
         <div
           className={`${shakeEffect ? "animate-shake" : "animate-none"}`}
           onAnimationEnd={() => setShakeEffect(false)}
@@ -97,3 +108,5 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
     </div>
   );
 }
+
+// can use <audio> tag
