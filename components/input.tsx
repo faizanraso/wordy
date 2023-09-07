@@ -11,30 +11,44 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const correctRef = useRef<HTMLAudioElement>(null);
   const errorRef = useRef<HTMLAudioElement>(null);
+  let reset: NodeJS.Timeout | undefined;
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setTimeout(() => {
+
+    clearTimeout(reset);
+
+    reset = setTimeout(() => {
       setIsSuccess(false);
       setIsFailed(false);
-    }, 500);
+    }, 300);
 
     if (inputValue.toLowerCase() == "yes") {
-      setTimeout(() => {
-        correctRef.current?.play();
-      }, 100);
+      playCorrectSound();
       setIsSuccess(true);
       setInputValue("");
       props.setUserWords([inputValue.toLowerCase(), ...props.userWords]);
     } else {
-      setTimeout(() => {
-        errorRef.current?.play();
-      }, 100);
+      playErrorSound();
       setShakeEffect(true);
       setIsFailed(true);
     }
     if (inputRef.current != null) {
       inputRef.current.focus();
+    }
+  }
+
+  function playCorrectSound() {
+    if (correctRef.current) {
+      correctRef.current.currentTime = 0;
+      correctRef.current.play();
+    }
+  }
+
+  function playErrorSound() {
+    if (errorRef.current) {
+      errorRef.current.currentTime = 0;
+      errorRef.current.play();
     }
   }
 
@@ -45,7 +59,6 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
           className="hidden"
           ref={correctRef}
           preload="auto"
-          autoPlay={false}
           src={
             "https://whpxtmfsvvizsvwcxgzc.supabase.co/storage/v1/object/public/audio/correct.wav"
           }
@@ -54,7 +67,6 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
           className="hidden"
           ref={errorRef}
           preload="auto"
-          autoPlay={false}
           src={
             "https://whpxtmfsvvizsvwcxgzc.supabase.co/storage/v1/object/public/audio/error.wav"
           }
