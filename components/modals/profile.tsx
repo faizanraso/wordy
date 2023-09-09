@@ -10,6 +10,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "../icons/icons";
@@ -29,6 +38,18 @@ export default function Profile() {
     signIn("google", { callbackUrl: window.location.origin });
     setIsLoading(false);
   }
+
+  const invoices = [
+    {
+      invoice: "Games Played",
+    },
+    {
+      invoice: "Highest Score",
+    },
+    {
+      invoice: "Average Score",
+    },
+  ];
 
   if (status !== "authenticated") {
     return (
@@ -118,9 +139,22 @@ export default function Profile() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{session.user?.name}</DialogTitle>
+          <DialogTitle className="px-4 pt-2">{session.user?.name}</DialogTitle>
           <DialogDescription>
-            <div className="flex items-center justify-center py-5">
+            <div className="flex flex-col items-center justify-center py-3 gap-y-5">
+              <Table>
+                {/* <TableCaption>Profile stats</TableCaption> */}
+                <TableBody>
+                  {invoices.map((invoice) => (
+                    <TableRow key={invoice.invoice}>
+                      <TableCell className="font-medium">
+                        {invoice.invoice}
+                      </TableCell>
+                      <TableCell className="font-medium">10</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
               <Button
                 className="bg-red-500 hover:bg-red-600 transition duration-150 text-white"
                 onClick={() => signOut()}
