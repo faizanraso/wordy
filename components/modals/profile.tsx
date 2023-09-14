@@ -143,7 +143,6 @@ export default function Profile() {
           <DialogDescription>
             <div className="flex flex-col items-center justify-center py-3 gap-y-5">
               <Table>
-                {/* <TableCaption>Profile stats</TableCaption> */}
                 <TableBody>
                   {invoices.map((invoice) => (
                     <TableRow key={invoice.invoice}>
