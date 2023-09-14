@@ -13,11 +13,6 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex flex-col items-center px-24 py-14">
-        <div className="text-center py-4">
-          <p className="font-semibold tracking-wide">
-            Topic: <span className="uppercase">TOPIC</span>
-          </p>
-        </div>
         <Input setUserWords={setUserWords} userWords={userWords} />
         <WordList words={userWords} />
       </main>
