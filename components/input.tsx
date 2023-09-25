@@ -27,7 +27,9 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
     if (!isStarted && inputValue.toLowerCase() == "ready") {
       // play some game start sound
       setIsStarted(true);
+      setInputValue("");
       // start game --> get topic
+      // start timer
     } else if (inputValue.toLowerCase() == "yes") {
       playCorrectSound();
       setIsSuccess(true);
@@ -62,10 +64,12 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
       <div className="text-center py-4">
         {isStarted ? (
           <p className="font-semibold tracking-wide">
-            Topic: <span className="uppercase">TOPIC</span>
+            Topic <span className="uppercase">TOPIC</span>
           </p>
         ) : (
-          <p className="font-semibold tracking-wide">Type "READY" to Start</p>
+          <p className="font-semibold tracking-wide">
+            Type &quot;READY&quot; to Start
+          </p>
         )}
       </div>
       <div className="mb-6 relative">
