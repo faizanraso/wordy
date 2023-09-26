@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function Input(props: { setUserWords: any; userWords: any }) {
   const [inputValue, setInputValue] = useState("");
@@ -8,11 +8,21 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const [shakeEffect, setShakeEffect] = useState(false);
+  const [topic, setTopic] = useState<string | undefined>();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const correctRef = useRef<HTMLAudioElement>(null);
   const errorRef = useRef<HTMLAudioElement>(null);
   let reset: NodeJS.Timeout | undefined;
+
+  useEffect(() => {
+    async function startGame() {
+      // start timer
+      
+    }
+
+    if (isStarted) startGame();
+  }, [isStarted]);
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -26,10 +36,8 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
 
     if (!isStarted && inputValue.toLowerCase() == "ready") {
       // play some game start sound
-      setIsStarted(true);
       setInputValue("");
-      // start game --> get topic
-      // start timer
+      setIsStarted(true);
     } else if (inputValue.toLowerCase() == "yes") {
       playCorrectSound();
       setIsSuccess(true);
@@ -64,7 +72,7 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
       <div className="text-center py-4">
         {isStarted ? (
           <p className="font-semibold tracking-wide">
-            Topic <span className="uppercase">TOPIC</span>
+            Topic: <span className="uppercase">{topic}</span>
           </p>
         ) : (
           <p className="font-semibold tracking-wide">
