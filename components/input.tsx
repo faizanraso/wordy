@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import useSWR from "swr";
 
 import { fetcher } from "@/app/utils/fetcher";
@@ -12,7 +13,7 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   const [isFailed, setIsFailed] = useState(false);
   const [shakeEffect, setShakeEffect] = useState(false);
   const [topic, setTopic] = useState<string | undefined>();
-  const [levelData, setLevelData] = useState();
+  const [levelData, setLevelData] = useState<any>();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const correctRef = useRef<HTMLAudioElement>(null);
@@ -20,14 +21,16 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   let reset: NodeJS.Timeout | undefined;
 
   const { data, error, isLoading } = useSWR("/api/getLevel", fetcher);
-  console.log(data);
 
   useEffect(() => {
     async function startGame() {
-      // start timer
+      setLevelData(data[Math.floor(Math.random() * data.length)]);
     }
 
-    if (isStarted) startGame();
+    if (isStarted) {
+      startGame();
+      gameStartNotification();
+    }
   }, [isStarted]);
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
@@ -44,11 +47,11 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
       // play some game start sound
       setInputValue("");
       setIsStarted(true);
-    } else if (inputValue.toLowerCase() == "yes") {
+    } else if (levelData.answers.includes(inputValue.toLowerCase())) {
       playCorrectSound();
       setIsSuccess(true);
       setInputValue("");
-      props.setUserWords([inputValue.toLowerCase(), ...props.userWords]);
+      props.setUserWords([inputValue.toUpperCase(), ...props.userWords]);
     } else {
       playErrorSound();
       setShakeEffect(true);
@@ -73,18 +76,26 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
     }
   }
 
+  function gameStartNotification() {
+    toast("Start guessing synonyms!", {
+      duration: 4000,
+      position: "top-center",
+      className: "font-semibold ",
+    });
+  }
+
   return (
     <>
       <div className="text-center py-4">
         {isStarted ? (
           <div className="space-y-3">
             <p className="font-semibold tracking-wide">
-              Word <span className="uppercase">{topic}</span>
+              <span className="uppercase text-xl">{levelData?.word}</span>
             </p>
             <p className="text-xs font-medium">
               {" "}
-              <span className="font-semibold">Example:</span> The word used in a
-              sentence here
+              <span className="font-semibold">Example:</span>{" "}
+              {levelData?.example}
             </p>
           </div>
         ) : (
@@ -158,6 +169,7 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
           </div>
         </form>
       </div>
+      <Toaster />
     </>
   );
 }

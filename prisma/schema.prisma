@@ -53,6 +53,7 @@ model VerificationToken {
 
 model Levels {
   level_id Int      @id @default(autoincrement())
-  topic    String
+  word     String   @default("")
   answers  String[]
+  example  String?  @default("")
 }
