@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import useSWR from "swr";
+
+import { fetcher } from "@/app/utils/fetcher";
 
 export default function Input(props: { setUserWords: any; userWords: any }) {
   const [inputValue, setInputValue] = useState("");
@@ -9,11 +12,15 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   const [isFailed, setIsFailed] = useState(false);
   const [shakeEffect, setShakeEffect] = useState(false);
   const [topic, setTopic] = useState<string | undefined>();
+  const [levelData, setLevelData] = useState();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const correctRef = useRef<HTMLAudioElement>(null);
   const errorRef = useRef<HTMLAudioElement>(null);
   let reset: NodeJS.Timeout | undefined;
+
+  const { data, error, isLoading } = useSWR("/api/getLevel", fetcher);
+  console.log(data);
 
   useEffect(() => {
     async function startGame() {
@@ -74,7 +81,11 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
             <p className="font-semibold tracking-wide">
               Word <span className="uppercase">{topic}</span>
             </p>
-            <p className="text-xs font-medium"> <span className="font-semibold">Example:</span> The word used in a sentence here</p>
+            <p className="text-xs font-medium">
+              {" "}
+              <span className="font-semibold">Example:</span> The word used in a
+              sentence here
+            </p>
           </div>
         ) : (
           <p className="font-semibold tracking-wide">
