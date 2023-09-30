@@ -23,10 +23,10 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
 
   useEffect(() => {
     async function startGame() {
-      setLevelData(data[Math.floor(Math.random() * data.length)]);
+      data ? setLevelData(data[Math.floor(Math.random() * data.length)]) : null;
     }
 
-    if (isStarted) {
+    if (isStarted && data) {
       startGame();
       gameStartNotification();
     }
