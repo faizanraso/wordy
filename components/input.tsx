@@ -21,23 +21,16 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
 
   const { data, error, isLoading } = useSWR("/api/getLevel", fetcher);
 
-  // if (error)
-  //   return (
-  //     <div className="text-center p-10">
-  //       <p className="font-semibold">Something went wrong...</p>
-  //     </div>
-  //   );
-
   useEffect(() => {
     async function startGame() {
-      setLevelData(data[Math.floor(Math.random() * data?.length)]);
+      setLevelData(data[Math.floor(Math.random() * data.length)]);
     }
 
     if (isStarted) {
       startGame();
       gameStartNotification();
     }
-  }, [isStarted]);
+  }, [isStarted, data]);
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
