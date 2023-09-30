@@ -12,7 +12,6 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const [shakeEffect, setShakeEffect] = useState(false);
-  const [topic, setTopic] = useState<string | undefined>();
   const [levelData, setLevelData] = useState<any>();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -22,9 +21,16 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
 
   const { data, error, isLoading } = useSWR("/api/getLevel", fetcher);
 
+  // if (error)
+  //   return (
+  //     <div className="text-center p-10">
+  //       <p className="font-semibold">Something went wrong...</p>
+  //     </div>
+  //   );
+
   useEffect(() => {
     async function startGame() {
-      setLevelData(data[Math.floor(Math.random() * data.length)]);
+      setLevelData(data[Math.floor(Math.random() * data?.length)]);
     }
 
     if (isStarted) {

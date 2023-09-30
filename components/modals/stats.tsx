@@ -7,8 +7,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useSession } from "next-auth/react";
 
 export default function Stats() {
+  const { data: session, status } = useSession();
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -33,11 +36,14 @@ export default function Stats() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you sure absolutely sure?</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </DialogDescription>
+          <DialogTitle>Leaderboard</DialogTitle>
+          {status !== "authenticated" ? (
+            <DialogDescription>
+              You must login to view the leaderboard
+            </DialogDescription>
+          ) : (
+            <DialogDescription>Logged In</DialogDescription>
+          )}
         </DialogHeader>
       </DialogContent>
     </Dialog>

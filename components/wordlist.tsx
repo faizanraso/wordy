@@ -5,7 +5,7 @@ export default function WordList(props: { words: string[] }) {
     <section>
       <div className="w-[350px] bg-gray-100 rounded-md text-center py-3">
         <div className="">
-          <h1 className="font-semibold">Correct Words</h1>
+          <h1 className="font-semibold">Synonyms</h1>
         </div>
         <div className="pt-3 space-y-1">
           {!props.words.length ? (
