@@ -27,13 +27,11 @@ export default function Info() {
         <DialogHeader>
           <DialogTitle>How to Play</DialogTitle>
           <DialogDescription>
-            Welcome to Wordy! Your mission? Guess as many of the 15 words
-            related to the topic as you can, within the time limit. Your score
-            depends on accurate guesses and your speed.
-          </DialogDescription>
-          <DialogDescription>
-            Keep in mind there may be more words that you can associate with the
-            topic, but may not be one of the answers.
+            Welcome to Wordy! Your mission? Challenge your vocabulary by
+            uncovering as many <span className="font-bold">synonyms</span>{" "}
+            for the provided word as you can within the given time frame. Your
+            score depends on the accuracy of your responses and the quantity you
+            manage to uncover.
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

@@ -18,7 +18,6 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   useEffect(() => {
     async function startGame() {
       // start timer
-      
     }
 
     if (isStarted) startGame();
@@ -71,9 +70,12 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
     <>
       <div className="text-center py-4">
         {isStarted ? (
-          <p className="font-semibold tracking-wide">
-            Topic: <span className="uppercase">{topic}</span>
-          </p>
+          <div className="space-y-3">
+            <p className="font-semibold tracking-wide">
+              Word <span className="uppercase">{topic}</span>
+            </p>
+            <p className="text-xs font-medium"> <span className="font-semibold">Example:</span> The word used in a sentence here</p>
+          </div>
         ) : (
           <p className="font-semibold tracking-wide">
             Type &quot;READY&quot; to Start

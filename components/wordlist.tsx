@@ -11,7 +11,7 @@ export default function WordList(props: { words: string[] }) {
           {!props.words.length ? (
             <div className="">
               <p className="text-xs font-medium">
-                Any correct words you guess will show up here!
+                Any correct synonyms you guess will show up here
               </p>
             </div>
           ) : null}
