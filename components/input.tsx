@@ -20,7 +20,7 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   let reset: NodeJS.Timeout | undefined;
 
   const { data, error, isLoading } = useSWR("/api/getLevel", fetcher);
-
+  console.log(error);
   useEffect(() => {
     async function startGame() {
       setLevelData(data[Math.floor(Math.random() * data.length)]);
