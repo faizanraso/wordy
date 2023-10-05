@@ -8,12 +8,18 @@ import Footer from "@/components/layout/footer";
 
 export default function Home() {
   const [userWords, setUserWords] = useState<string[]>([]);
+  const [isStarted, setIsStarted] = useState<boolean>(false);
 
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex flex-col items-center px-24 py-14">
-        <Input setUserWords={setUserWords} userWords={userWords} />
+        <Input
+          setUserWords={setUserWords}
+          userWords={userWords}
+          isStarted={isStarted}
+          setIsStarted={setIsStarted}
+        />
         <WordList words={userWords} />
       </main>
       <Footer />

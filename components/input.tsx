@@ -6,9 +6,14 @@ import useSWR from "swr";
 
 import { fetcher } from "@/app/utils/fetcher";
 
-export default function Input(props: { setUserWords: any; userWords: any }) {
+export default function Input(props: {
+  setUserWords: any;
+  userWords: any;
+  isStarted: boolean;
+  setIsStarted: any;
+}) {
   const [inputValue, setInputValue] = useState("");
-  const [isStarted, setIsStarted] = useState(false);
+  // const [isStarted, setIsStarted] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const [shakeEffect, setShakeEffect] = useState(false);
@@ -26,11 +31,11 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
       setLevelData(data[Math.floor(Math.random() * data.length)]);
     }
 
-    if (isStarted && data) {
+    if (props.isStarted && data) {
       startGame();
       gameStartNotification();
     }
-  }, [isStarted, data]);
+  }, [props.isStarted, data]);
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -42,10 +47,10 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
       setIsFailed(false);
     }, 300);
 
-    if (!isStarted && inputValue.toLowerCase() == "ready") {
+    if (!props.isStarted && inputValue.toLowerCase() == "ready") {
       // play some game start sound
       setInputValue("");
-      setIsStarted(true);
+      props.setIsStarted(true);
     } else if (levelData?.answers.includes(inputValue.toLowerCase())) {
       playCorrectSound();
       setIsSuccess(true);
@@ -86,7 +91,7 @@ export default function Input(props: { setUserWords: any; userWords: any }) {
   return (
     <>
       <div className="text-center py-4">
-        {isStarted ? (
+        {props.isStarted ? (
           <div className="space-y-3">
             <p className="font-semibold tracking-wide">
               <span className="uppercase text-xl">{levelData?.word}</span>
