@@ -1,6 +1,9 @@
 import React from "react";
 
-export default function WordList(props: { words: string[] }) {
+export default function WordList(props: {
+  words: string[];
+  gameEnded: boolean;
+}) {
   return (
     <section>
       <div className="w-[350px] bg-gray-100 rounded-md text-center py-3">
@@ -10,9 +13,11 @@ export default function WordList(props: { words: string[] }) {
         <div className="pt-3 space-y-1">
           {!props.words.length ? (
             <div className="">
-              <p className="text-xs font-medium">
-                Any correct synonyms you guess will show up here
-              </p>
+              {!props.gameEnded ?? (
+                <p className="text-xs font-medium">
+                  Any correct synonyms you guess will show up here
+                </p>
+              )}
             </div>
           ) : null}
           <ul>
