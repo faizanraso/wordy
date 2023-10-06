@@ -10,10 +10,11 @@ export default function Input(props: {
   setUserWords: any;
   userWords: any;
   isStarted: boolean;
-  setIsStarted: any;
+  setIsStarted: (arg0: boolean) => void;
+  setGameEnded: (arg0: boolean) => void;
+  setTimeRemaining: (arg0: number) => void;
 }) {
   const [inputValue, setInputValue] = useState("");
-  // const [isStarted, setIsStarted] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const [shakeEffect, setShakeEffect] = useState(false);
@@ -51,6 +52,9 @@ export default function Input(props: {
       // play some game start sound
       setInputValue("");
       props.setIsStarted(true);
+      props.setUserWords([]);
+      props.setGameEnded(false);
+      props.setTimeRemaining(30);
     } else if (levelData?.answers.includes(inputValue.toLowerCase())) {
       playCorrectSound();
       setIsSuccess(true);
