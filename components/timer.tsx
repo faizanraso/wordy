@@ -19,7 +19,8 @@ export default function Timer(props: {
     if (props.timeRemaining <= 0) {
       props.setIsStarted(false);
       props.setGameEnded(true);
-      console.log("ended");
+      props.setTimeRemaining(30);
+      
     }
   }, [props.timeRemaining, props.isStarted]);
 
