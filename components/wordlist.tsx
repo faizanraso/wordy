@@ -13,11 +13,11 @@ export default function WordList(props: {
         <div className="pt-3 space-y-1">
           {!props.words.length ? (
             <div className="">
-              {!props.gameEnded ?? (
+              {!props.gameEnded ? (
                 <p className="text-xs font-medium">
                   Any correct synonyms you guess will show up here
                 </p>
-              )}
+              ) : null}
             </div>
           ) : null}
           <ul>
@@ -31,6 +31,8 @@ export default function WordList(props: {
                   </li>
                 ))
               : null}
+
+            {props.gameEnded ? <p>diplay rmeaning words</p> : null}
           </ul>
         </div>
       </div>
