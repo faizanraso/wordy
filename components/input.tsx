@@ -5,12 +5,14 @@ import toast, { Toaster } from "react-hot-toast";
 import useSWR from "swr";
 
 import { fetcher } from "@/app/utils/fetcher";
+import GameEndAlert from "./modals/gameEnd";
 
 export default function Input(props: {
   setUserWords: any;
   userWords: any;
   isStarted: boolean;
   setIsStarted: (arg0: boolean) => void;
+  gameEnded: boolean;
   setGameEnded: (arg0: boolean) => void;
   setTimeRemaining: (arg0: number) => void;
 }) {
@@ -178,6 +180,13 @@ export default function Input(props: {
         </form>
       </div>
       <Toaster />
+      <GameEndAlert
+        open={props.gameEnded}
+        setOpen={props.setGameEnded}
+        wordList={props.userWords}
+        setUserWords={props.setUserWords}
+        levelData={levelData}
+      />
     </>
   );
 }
