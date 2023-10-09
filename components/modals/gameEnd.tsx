@@ -17,19 +17,18 @@ export default function GameEndAlert(props: {
   levelData: { answers: string[] };
   setUserWords: (arg0: never[]) => void;
 }) {
-  
   function resetGame() {
     props.setUserWords([]);
   }
 
   return (
     <AlertDialog open={props.open} onOpenChange={props.setOpen}>
-      <AlertDialogContent>
+      <AlertDialogContent className="items-center">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-center mx-auto">
+          <AlertDialogTitle className="text-center mx-auto pb-3">
             Results
           </AlertDialogTitle>
-          <AlertDialogDescription className="text-center items-center">
+          <AlertDialogDescription className="">
             <ul>
               {props.wordList.map((word) => (
                 <li
