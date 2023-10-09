@@ -40,7 +40,7 @@ export default function GameEndAlert(props: {
               ))}
               {props.levelData?.answers.map((word: string) =>
                 !props.wordList.includes(word.toLowerCase()) ? (
-                  <p className="text-red-700 font-medium tracking-wide">
+                  <p key={word} className="text-red-700 font-medium tracking-wide">
                     {word}
                   </p>
                 ) : null
