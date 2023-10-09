@@ -23,12 +23,12 @@ export default function GameEndAlert(props: {
 
   return (
     <AlertDialog open={props.open} onOpenChange={props.setOpen}>
-      <AlertDialogContent className="items-center">
+      <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-center mx-auto pb-3">
+          <AlertDialogTitle>
             Results
           </AlertDialogTitle>
-          <AlertDialogDescription className="">
+          <AlertDialogDescription>
             <ul>
               {props.wordList.map((word) => (
                 <li
