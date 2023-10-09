@@ -7,6 +7,7 @@ import useSWR from "swr";
 import { fetcher } from "@/app/utils/fetcher";
 import GameEndAlert from "./modals/gameEnd";
 import { playCorrectSound, playErrorSound } from "@/app/utils/play-sounds";
+import { toTitleCase } from "@/app/utils/title-case";
 
 export default function Input(props: {
   setUserWords: any;
@@ -62,7 +63,7 @@ export default function Input(props: {
       playCorrectSound(correctRef);
       setIsSuccess(true);
       setInputValue("");
-      props.setUserWords([inputValue.toUpperCase(), ...props.userWords]);
+      props.setUserWords([toTitleCase(inputValue), ...props.userWords]);
     } else {
       playErrorSound(errorRef);
       setShakeEffect(true);

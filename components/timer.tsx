@@ -5,8 +5,6 @@ import React, { useEffect, useState } from "react";
 interface TimerProps {
   isStarted: boolean;
   setIsStarted: any;
-  userWords: string[];
-  gameEnded: boolean;
   setGameEnded: any;
   timeRemaining: number;
   setTimeRemaining: (arg0: number) => void;
@@ -15,8 +13,6 @@ interface TimerProps {
 export default function Timer({
   isStarted,
   setIsStarted,
-  userWords,
-  gameEnded,
   setGameEnded,
   timeRemaining,
   setTimeRemaining,

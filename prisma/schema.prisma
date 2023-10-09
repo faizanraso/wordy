@@ -51,9 +51,9 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Levels {
-  level_id Int      @id @default(autoincrement())
+model SynonymLevels {
+  level_id String   @id @default(cuid())
   word     String   @default("")
+  example  String   @default("")
   answers  String[]
-  example  String?  @default("")
 }
