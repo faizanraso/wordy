@@ -1,5 +1,7 @@
 import React from "react";
 
+import { toTitleCase } from "@/app/utils/title-case";
+
 export default function WordList(props: {
   words: string[];
   gameEnded: boolean;
@@ -27,7 +29,7 @@ export default function WordList(props: {
                     className="text-sm font-medium transition-opacity ease-in duration-150 opacity-100"
                     key={word}
                   >
-                    {word}
+                    {toTitleCase(word)}
                   </li>
                 ))
               : null}
