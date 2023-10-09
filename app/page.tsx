@@ -6,6 +6,7 @@ import Header from "@/components/layout/header";
 import WordList from "@/components/wordlist";
 import Footer from "@/components/layout/footer";
 import Timer from "@/components/timer";
+import GameEndAlert from "@/components/modals/gameEnd";
 
 export default function Home() {
   const [userWords, setUserWords] = useState<string[]>([]);
@@ -31,6 +32,7 @@ export default function Home() {
           userWords={userWords}
           isStarted={isStarted}
           setIsStarted={setIsStarted}
+          gameEnded={gameEnded}
           setGameEnded={setGameEnded}
           setTimeRemaining={setTimeRemaining}
         />

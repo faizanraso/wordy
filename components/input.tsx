@@ -5,12 +5,15 @@ import toast, { Toaster } from "react-hot-toast";
 import useSWR from "swr";
 
 import { fetcher } from "@/app/utils/fetcher";
+import GameEndAlert from "./modals/gameEnd";
+import { playCorrectSound, playErrorSound } from "@/app/utils/play-sounds";
 
 export default function Input(props: {
   setUserWords: any;
   userWords: any;
   isStarted: boolean;
   setIsStarted: (arg0: boolean) => void;
+  gameEnded: boolean;
   setGameEnded: (arg0: boolean) => void;
   setTimeRemaining: (arg0: number) => void;
 }) {
@@ -56,31 +59,17 @@ export default function Input(props: {
       props.setGameEnded(false);
       props.setTimeRemaining(30);
     } else if (levelData?.answers.includes(inputValue.toLowerCase())) {
-      playCorrectSound();
+      playCorrectSound(correctRef);
       setIsSuccess(true);
       setInputValue("");
       props.setUserWords([inputValue.toUpperCase(), ...props.userWords]);
     } else {
-      playErrorSound();
+      playErrorSound(errorRef);
       setShakeEffect(true);
       setIsFailed(true);
     }
     if (inputRef.current != null) {
       inputRef.current.focus();
-    }
-  }
-
-  function playCorrectSound() {
-    if (correctRef.current) {
-      correctRef.current.currentTime = 0;
-      correctRef.current.play();
-    }
-  }
-
-  function playErrorSound() {
-    if (errorRef.current) {
-      errorRef.current.currentTime = 0;
-      errorRef.current.play();
     }
   }
 
@@ -178,6 +167,13 @@ export default function Input(props: {
         </form>
       </div>
       <Toaster />
+      <GameEndAlert
+        open={props.gameEnded}
+        setOpen={props.setGameEnded}
+        wordList={props.userWords}
+        setUserWords={props.setUserWords}
+        levelData={levelData}
+      />
     </>
   );
 }
