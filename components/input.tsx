@@ -26,7 +26,6 @@ export default function Input({
   setIsStarted,
   gameEnded,
   setGameEnded,
-  setTimeRemaining,
 }: InputProps) {
   const [inputValue, setInputValue] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -66,9 +65,6 @@ export default function Input({
       // play some game start sound
       setInputValue("");
       setIsStarted(true);
-      setUserWords([]);
-      setGameEnded(false);
-      setTimeRemaining(30);
     } else if (levelData?.answers.includes(inputValue.toLowerCase())) {
       playCorrectSound(correctRef);
       setIsSuccess(true);
@@ -76,6 +72,7 @@ export default function Input({
       setUserWords([toTitleCase(inputValue), ...userWords]);
     } else {
       playErrorSound(errorRef);
+      console.log(inputValue);
       setShakeEffect(true);
       setIsFailed(true);
     }
@@ -184,6 +181,7 @@ export default function Input({
         wordList={userWords}
         setUserWords={setUserWords}
         levelData={levelData}
+        setInputValue={setInputValue}
       />
     </>
   );

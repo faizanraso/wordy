@@ -16,6 +16,7 @@ interface GameEndAlertProps {
   wordList: string[];
   levelData: { answers: string[] };
   setUserWords: (arg0: never[]) => void;
+  setInputValue: (arg0: string) => void;
 }
 
 export default function GameEndAlert({
@@ -24,9 +25,11 @@ export default function GameEndAlert({
   wordList,
   levelData,
   setUserWords,
+  setInputValue,
 }: GameEndAlertProps) {
   function resetGame() {
     setUserWords([]);
+    setInputValue("");
   }
 
   return (
