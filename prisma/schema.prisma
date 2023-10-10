@@ -52,8 +52,8 @@ model VerificationToken {
 }
 
 model SynonymLevels {
-  level_id String   @id @default(cuid())
-  word     String   @default("")
+  level_id String   @id @unique @default(cuid())
+  word     String   @unique @default("")
   example  String   @default("")
   answers  String[]
 }

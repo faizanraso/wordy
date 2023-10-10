@@ -9,7 +9,7 @@ import GameEndAlert from "./modals/gameEnd";
 import { playCorrectSound, playErrorSound } from "@/app/utils/play-sounds";
 import { toTitleCase } from "@/app/utils/title-case";
 
-export default function Input(props: {
+interface InputProps {
   setUserWords: any;
   userWords: any;
   isStarted: boolean;
@@ -17,7 +17,17 @@ export default function Input(props: {
   gameEnded: boolean;
   setGameEnded: (arg0: boolean) => void;
   setTimeRemaining: (arg0: number) => void;
-}) {
+}
+
+export default function Input({
+  setUserWords,
+  userWords,
+  isStarted,
+  setIsStarted,
+  gameEnded,
+  setGameEnded,
+  setTimeRemaining,
+}: InputProps) {
   const [inputValue, setInputValue] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
@@ -36,11 +46,11 @@ export default function Input(props: {
       setLevelData(data[Math.floor(Math.random() * data.length)]);
     }
 
-    if (props.isStarted && data) {
+    if (isStarted && data) {
       startGame();
       gameStartNotification();
     }
-  }, [props.isStarted, data]);
+  }, [isStarted, data]);
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -52,18 +62,18 @@ export default function Input(props: {
       setIsFailed(false);
     }, 300);
 
-    if (!props.isStarted && inputValue.toLowerCase() == "ready") {
+    if (!isStarted && inputValue.toLowerCase() == "ready") {
       // play some game start sound
       setInputValue("");
-      props.setIsStarted(true);
-      props.setUserWords([]);
-      props.setGameEnded(false);
-      props.setTimeRemaining(30);
+      setIsStarted(true);
+      setUserWords([]);
+      setGameEnded(false);
+      setTimeRemaining(30);
     } else if (levelData?.answers.includes(inputValue.toLowerCase())) {
       playCorrectSound(correctRef);
       setIsSuccess(true);
       setInputValue("");
-      props.setUserWords([toTitleCase(inputValue), ...props.userWords]);
+      setUserWords([toTitleCase(inputValue), ...userWords]);
     } else {
       playErrorSound(errorRef);
       setShakeEffect(true);
@@ -85,7 +95,7 @@ export default function Input(props: {
   return (
     <>
       <div className="text-center py-4">
-        {props.isStarted ? (
+        {isStarted ? (
           <div className="space-y-3">
             <p className="font-semibold tracking-wide">
               <span className="uppercase text-xl">{levelData?.word}</span>
@@ -169,10 +179,10 @@ export default function Input(props: {
       </div>
       <Toaster />
       <GameEndAlert
-        open={props.gameEnded}
-        setOpen={props.setGameEnded}
-        wordList={props.userWords}
-        setUserWords={props.setUserWords}
+        open={gameEnded}
+        setOpen={setGameEnded}
+        wordList={userWords}
+        setUserWords={setUserWords}
         levelData={levelData}
       />
     </>

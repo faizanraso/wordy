@@ -10,27 +10,33 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-export default function GameEndAlert(props: {
+interface GameEndAlertProps {
   open: boolean;
   setOpen: any;
   wordList: string[];
   levelData: { answers: string[] };
   setUserWords: (arg0: never[]) => void;
-}) {
+}
+
+export default function GameEndAlert({
+  open,
+  setOpen,
+  wordList,
+  levelData,
+  setUserWords,
+}: GameEndAlertProps) {
   function resetGame() {
-    props.setUserWords([]);
+    setUserWords([]);
   }
 
   return (
-    <AlertDialog open={props.open} onOpenChange={props.setOpen}>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            Results
-          </AlertDialogTitle>
+          <AlertDialogTitle>Results</AlertDialogTitle>
           <AlertDialogDescription>
             <ul>
-              {props.wordList.map((word) => (
+              {wordList.map((word) => (
                 <li
                   key={word}
                   className="text-green-700 font-medium tracking-wide"
@@ -38,9 +44,12 @@ export default function GameEndAlert(props: {
                   {word}
                 </li>
               ))}
-              {props.levelData?.answers.map((word: string) =>
-                !props.wordList.includes(word.toLowerCase()) ? (
-                  <p key={word} className="text-red-700 font-medium tracking-wide">
+              {levelData?.answers.map((word: string) =>
+                !wordList.includes(word.toLowerCase()) ? (
+                  <p
+                    key={word}
+                    className="text-red-700 font-medium tracking-wide"
+                  >
                     {word}
                   </p>
                 ) : null
