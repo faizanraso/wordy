@@ -27,11 +27,25 @@ export default function Info() {
         <DialogHeader>
           <DialogTitle>How to Play</DialogTitle>
           <DialogDescription>
-            Welcome to Wordy! Your mission? Challenge your vocabulary by
-            uncovering as many <span className="font-bold">synonyms</span>{" "}
-            for the provided word as you can within the given time frame. Your
-            score depends on the accuracy of your responses and the quantity you
-            manage to uncover.
+            Welcome to Wordy! Your challenge is to test your vocabulary within a
+            limited time. You'll be presented with words, and your mission is to
+            find a <span className="font-bold">synonym</span> for each word as
+            quickly as possible. Get it right, and you'll move on to the next
+            word (or you can skip it).
+            <br></br>
+            <br></br>
+            <span className="font-bold">Here's how it works:</span>
+            {"\n"}
+            <ul className="list-outside py-1">
+              <li>- You have a set time limit (30 sec) per game.</li>
+              <li>
+                - For each word, try to guess as a synonym for it, and you'll
+                move on.
+              </li>
+              <li>- You can skip a word if you're unsure or stuck.</li>
+            </ul>
+            <br></br>
+            Are you ready to put your vocabulary to the test? Let's get started!
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
