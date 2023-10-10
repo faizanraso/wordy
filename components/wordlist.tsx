@@ -2,10 +2,12 @@ import React from "react";
 
 import { toTitleCase } from "@/app/utils/title-case";
 
-export default function WordList(props: {
+interface WordListProps {
   words: string[];
   gameEnded: boolean;
-}) {
+}
+
+export default function WordList({ words, gameEnded }: WordListProps) {
   return (
     <section>
       <div className="w-[350px] bg-gray-100 rounded-md text-center py-3">
@@ -13,9 +15,9 @@ export default function WordList(props: {
           <h1 className="font-semibold">Synonyms</h1>
         </div>
         <div className="pt-3 space-y-1">
-          {!props.words.length ? (
+          {!words.length ? (
             <div className="">
-              {!props.gameEnded ? (
+              {!gameEnded ? (
                 <p className="text-xs font-medium">
                   Any correct synonyms you guess will show up here
                 </p>
@@ -23,8 +25,8 @@ export default function WordList(props: {
             </div>
           ) : null}
           <ul>
-            {props.words
-              ? props.words.map((word) => (
+            {words
+              ? words.map((word) => (
                   <li
                     className="text-sm font-medium transition-opacity ease-in duration-150 opacity-100"
                     key={word}
@@ -34,7 +36,7 @@ export default function WordList(props: {
                 ))
               : null}
 
-            {props.gameEnded ? <p>diplay rmeaning words</p> : null}
+            {gameEnded ? <p>diplay rmeaning words</p> : null}
           </ul>
         </div>
       </div>
