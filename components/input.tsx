@@ -8,6 +8,7 @@ import { fetcher } from "@/app/utils/fetcher";
 import GameEndAlert from "./modals/gameEnd";
 import { playCorrectSound, playErrorSound } from "@/app/utils/play-sounds";
 import { toTitleCase } from "@/app/utils/title-case";
+import shuffleArray from "@/app/utils/shuffle-array";
 
 interface InputProps {
   setUserWords: any;
@@ -31,7 +32,10 @@ export default function Input({
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const [shakeEffect, setShakeEffect] = useState(false);
-  const [levelData, setLevelData] = useState<any>();
+  const [allWords, setAllWords] = useState<any[]>();
+  const [currentWord, setCurrentWord] = useState<any>();
+  const [wordListText, setWordListText] = useState<string>("");
+  const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const correctRef = useRef<HTMLAudioElement>(null);
@@ -41,15 +45,19 @@ export default function Input({
   const { data, error, isLoading } = useSWR("/api/getLevel", fetcher);
 
   useEffect(() => {
+    if (data) setAllWords(shuffleArray(data));
+  }, [data]);
+
+  useEffect(() => {
     async function startGame() {
-      setLevelData(data[Math.floor(Math.random() * data.length)]);
+      if (allWords) setCurrentWord(allWords[currentWordIndex]);
     }
 
-    if (isStarted && data) {
+    if (isStarted && allWords) {
       startGame();
       gameStartNotification();
     }
-  }, [isStarted, data]);
+  }, [isStarted, allWords]);
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -63,16 +71,25 @@ export default function Input({
 
     if (!isStarted && inputValue.toLowerCase() == "ready") {
       // play some game start sound
+
       setInputValue("");
       setIsStarted(true);
-    } else if (levelData?.answers.includes(inputValue.toLowerCase())) {
+    } else if (currentWord?.answers.includes(inputValue.toLowerCase())) {
       playCorrectSound(correctRef);
       setIsSuccess(true);
-      setInputValue("");
       setUserWords([toTitleCase(inputValue), ...userWords]);
+      if (allWords) setCurrentWord(allWords[currentWordIndex + 1]);
+      setCurrentWordIndex(currentWordIndex + 1);
+      setWordListText(
+        wordListText +
+          toTitleCase(currentWord.word) +
+          " --> " +
+          toTitleCase(inputValue) +
+          "\n"
+      );
+      setInputValue("");
     } else {
       playErrorSound(errorRef);
-      console.log(inputValue);
       setShakeEffect(true);
       setIsFailed(true);
     }
@@ -95,12 +112,12 @@ export default function Input({
         {isStarted ? (
           <div className="space-y-3">
             <p className="font-semibold tracking-wide">
-              <span className="uppercase text-xl">{levelData?.word}</span>
+              <span className="uppercase text-xl">{currentWord?.word}</span>
             </p>
             <p className="text-xs font-medium">
               {" "}
               <span className="font-semibold">Example:</span>{" "}
-              {levelData?.example}
+              {currentWord?.example}
             </p>
           </div>
         ) : (
@@ -115,17 +132,13 @@ export default function Input({
             className="hidden"
             ref={correctRef}
             preload="auto"
-            src={
-              "https://whpxtmfsvvizsvwcxgzc.supabase.co/storage/v1/object/public/audio/correct.wav"
-            }
+            src={process.env.NEXT_PUBLIC_CORRECT_SOUND}
           />
           <audio
             className="hidden"
             ref={errorRef}
             preload="auto"
-            src={
-              "https://whpxtmfsvvizsvwcxgzc.supabase.co/storage/v1/object/public/audio/error.wav"
-            }
+            src={process.env.NEXT_PUBLIC_ERROR_SOUND}
           />
           <div
             className={`${shakeEffect ? "animate-shake" : "animate-none"}`}
@@ -178,9 +191,8 @@ export default function Input({
       <GameEndAlert
         open={gameEnded}
         setOpen={setGameEnded}
-        wordList={userWords}
+        userWords={userWords}
         setUserWords={setUserWords}
-        levelData={levelData}
         setInputValue={setInputValue}
       />
     </>
