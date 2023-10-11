@@ -13,7 +13,7 @@ import {
 interface GameEndAlertProps {
   open: boolean;
   setOpen: any;
-  wordList: string[];
+  userWords: string[];
   setUserWords: (arg0: never[]) => void;
   setInputValue: (arg0: string) => void;
 }
@@ -21,7 +21,7 @@ interface GameEndAlertProps {
 export default function GameEndAlert({
   open,
   setOpen,
-  wordList,
+  userWords,
   setUserWords,
   setInputValue,
 }: GameEndAlertProps) {
@@ -37,7 +37,7 @@ export default function GameEndAlert({
           <AlertDialogTitle>Results</AlertDialogTitle>
           <AlertDialogDescription>
             <ul>
-              {wordList.map((word) => (
+              {userWords.map((word) => (
                 <li
                   key={word}
                   className="text-green-700 font-medium tracking-wide"

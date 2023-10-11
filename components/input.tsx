@@ -34,6 +34,7 @@ export default function Input({
   const [shakeEffect, setShakeEffect] = useState(false);
   const [allWords, setAllWords] = useState<any[]>();
   const [currentWord, setCurrentWord] = useState<any>();
+  const [wordListText, setWordListText] = useState<string>("");
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -76,13 +77,19 @@ export default function Input({
     } else if (currentWord?.answers.includes(inputValue.toLowerCase())) {
       playCorrectSound(correctRef);
       setIsSuccess(true);
-      setInputValue("");
       setUserWords([toTitleCase(inputValue), ...userWords]);
       if (allWords) setCurrentWord(allWords[currentWordIndex + 1]);
       setCurrentWordIndex(currentWordIndex + 1);
+      setWordListText(
+        wordListText +
+          toTitleCase(currentWord.word) +
+          " --> " +
+          toTitleCase(inputValue) +
+          "\n"
+      );
+      setInputValue("");
     } else {
       playErrorSound(errorRef);
-      console.log(inputValue);
       setShakeEffect(true);
       setIsFailed(true);
     }
@@ -125,17 +132,13 @@ export default function Input({
             className="hidden"
             ref={correctRef}
             preload="auto"
-            src={
-              "https://whpxtmfsvvizsvwcxgzc.supabase.co/storage/v1/object/public/audio/correct.wav"
-            }
+            src={process.env.NEXT_PUBLIC_CORRECT_SOUND}
           />
           <audio
             className="hidden"
             ref={errorRef}
             preload="auto"
-            src={
-              "https://whpxtmfsvvizsvwcxgzc.supabase.co/storage/v1/object/public/audio/error.wav"
-            }
+            src={process.env.NEXT_PUBLIC_ERROR_SOUND}
           />
           <div
             className={`${shakeEffect ? "animate-shake" : "animate-none"}`}
@@ -188,7 +191,7 @@ export default function Input({
       <GameEndAlert
         open={gameEnded}
         setOpen={setGameEnded}
-        wordList={userWords}
+        userWords={userWords}
         setUserWords={setUserWords}
         setInputValue={setInputValue}
       />
