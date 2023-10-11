@@ -14,7 +14,6 @@ interface GameEndAlertProps {
   open: boolean;
   setOpen: any;
   wordList: string[];
-  levelData: { answers: string[] };
   setUserWords: (arg0: never[]) => void;
   setInputValue: (arg0: string) => void;
 }
@@ -23,7 +22,6 @@ export default function GameEndAlert({
   open,
   setOpen,
   wordList,
-  levelData,
   setUserWords,
   setInputValue,
 }: GameEndAlertProps) {
@@ -47,16 +45,6 @@ export default function GameEndAlert({
                   {word}
                 </li>
               ))}
-              {levelData?.answers.map((word: string) =>
-                !wordList.includes(word.toLowerCase()) ? (
-                  <p
-                    key={word}
-                    className="text-red-700 font-medium tracking-wide"
-                  >
-                    {word}
-                  </p>
-                ) : null
-              )}
             </ul>
           </AlertDialogDescription>
         </AlertDialogHeader>
