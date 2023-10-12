@@ -106,13 +106,23 @@ export default function Input({
     });
   }
 
+  function handleSkip() {
+    if (allWords) {
+      setCurrentWord(allWords[currentWordIndex + 1]);
+      setCurrentWordIndex(currentWordIndex + 1);
+      setInputValue("");
+    }
+  }
+
   return (
     <>
-      <div className="text-center py-4">
+      <div className="text-center py-3">
         {isStarted ? (
           <div className="space-y-3">
             <p className="font-semibold tracking-wide">
-              <span className="uppercase text-xl">{currentWord?.word}</span>
+              <span className="uppercase text-xl transition ease-in-out">
+                {currentWord?.word}
+              </span>
             </p>
             <p className="text-xs font-medium">
               {" "}
@@ -126,9 +136,9 @@ export default function Input({
           </p>
         )}
       </div>
-      <div className="mb-6 relative">
-        <form onSubmit={checkAnswer}>
-          <audio
+      <div className="mb-3 relative">
+        <form onSubmit={checkAnswer} noValidate>
+          {/* <audio
             className="hidden"
             ref={correctRef}
             preload="auto"
@@ -139,7 +149,7 @@ export default function Input({
             ref={errorRef}
             preload="auto"
             src={process.env.NEXT_PUBLIC_ERROR_SOUND}
-          />
+          /> */}
           <div
             className={`${shakeEffect ? "animate-shake" : "animate-none"}`}
             onAnimationEnd={() => setShakeEffect(false)}
@@ -148,7 +158,6 @@ export default function Input({
               ref={inputRef}
               type="text"
               autoFocus
-              required
               className={`text-center font-medium text-2xl uppercase justify-center tracking-wider flex w-[350px] p-3 text-gray-900 border-2 border-gray-300 rounded-lg select-none outline-none transition duration-150
           ${
             isSuccess
@@ -184,6 +193,32 @@ export default function Input({
                 </svg>
               </button>
             </div>
+          </div>
+          <div className="flex items-center justify-center pt-3">
+            <button
+              disabled={!isStarted}
+              className="shadow-inner py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:opacity-40"
+              onClick={handleSkip}
+            >
+              Skip
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15px"
+                height="15px"
+                fill="none"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+                color="#000000"
+              >
+                <path
+                  stroke="#000000"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M18 7v10M6.972 5.267A.6.6 0 0 0 6 5.738v12.524a.6.6 0 0 0 .972.47l7.931-6.261a.6.6 0 0 0 0-.942L6.972 5.267Z"
+                ></path>
+              </svg>
+            </button>
           </div>
         </form>
       </div>
