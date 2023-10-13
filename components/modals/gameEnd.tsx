@@ -40,12 +40,12 @@ export default function GameEndAlert({
           <AlertDialogTitle>Results</AlertDialogTitle>
           <AlertDialogDescription>
             <ul>
-              {userWords.map((word) => (
+              {correctWordsData.map((wordData) => (
                 <li
-                  key={word}
+                  key={wordData.word}
                   className="text-green-700 font-medium tracking-wide"
                 >
-                  {word}
+                  {wordData.userAnswer}
                 </li>
               ))}
             </ul>

@@ -32,14 +32,14 @@ export default function WordList({
               ) : null}
             </div>
           ) : null}
-          <ul>
+          <ul className="gap-y-1">
             {correctWordsData
-              ? correctWordsData.map((word) => (
+              ? correctWordsData.map((wordData) => (
                   <li
                     className="text-sm font-medium transition-opacity ease-in duration-150 opacity-100"
-                    key={word}
+                    key={wordData.word}
                   >
-                    {toTitleCase(word)}
+                    {toTitleCase(wordData.userAnswer)}
                   </li>
                 ))
               : null}
