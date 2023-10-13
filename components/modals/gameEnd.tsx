@@ -1,32 +1,35 @@
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
 interface GameEndAlertProps {
   open: boolean;
   setOpen: any;
-  userWords: string[];
-  setUserWords: (arg0: never[]) => void;
+  correctWordsData: {
+    word: string;
+    example: string;
+    possibleAnswers: string[];
+    userAnswer: string;
+  }[];
+  setCorrectWordsData: any;
   setInputValue: (arg0: string) => void;
 }
 
 export default function GameEndAlert({
   open,
   setOpen,
-  userWords,
-  setUserWords,
+  correctWordsData,
+  setCorrectWordsData,
   setInputValue,
 }: GameEndAlertProps) {
   function resetGame() {
-    setUserWords([]);
+    setCorrectWordsData([]);
     setInputValue("");
   }
 

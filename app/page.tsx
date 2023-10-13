@@ -8,7 +8,14 @@ import Footer from "@/components/layout/footer";
 import Timer from "@/components/timer";
 
 export default function Home() {
-  const [userWords, setUserWords] = useState<string[]>([]);
+  const [correctWordsData, setCorrectWordsData] = useState<
+    {
+      word: string;
+      example: string;
+      possibleAnswers: string[];
+      userAnswer: string;
+    }[]
+  >([]);
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [gameEnded, setGameEnded] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(30);
@@ -25,15 +32,15 @@ export default function Home() {
           setGameEnded={setGameEnded}
         />
         <Input
-          setUserWords={setUserWords}
-          userWords={userWords}
+          correctWordsData={correctWordsData}
+          setCorrectWordsData={setCorrectWordsData}
           isStarted={isStarted}
           setIsStarted={setIsStarted}
           gameEnded={gameEnded}
           setGameEnded={setGameEnded}
           setTimeRemaining={setTimeRemaining}
         />
-        <WordList words={userWords} gameEnded={gameEnded} />
+        <WordList correctWordsData={correctWordsData} gameEnded={gameEnded} />
       </main>
       <Footer />
     </div>
