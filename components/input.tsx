@@ -11,8 +11,13 @@ import { toTitleCase } from "@/app/utils/title-case";
 import shuffleArray from "@/app/utils/shuffle-array";
 
 interface InputProps {
-  setUserWords: any;
-  userWords: any;
+  correctWordsData: {
+    word: string;
+    example: string;
+    possibleAnswers: string[];
+    userAnswer: string;
+  }[];
+  setCorrectWordsData: any;
   isStarted: boolean;
   setIsStarted: (arg0: boolean) => void;
   gameEnded: boolean;
@@ -21,8 +26,8 @@ interface InputProps {
 }
 
 export default function Input({
-  setUserWords,
-  userWords,
+  correctWordsData,
+  setCorrectWordsData,
   isStarted,
   setIsStarted,
   gameEnded,
@@ -34,7 +39,6 @@ export default function Input({
   const [shakeEffect, setShakeEffect] = useState(false);
   const [allWords, setAllWords] = useState<any[]>();
   const [currentWord, setCurrentWord] = useState<any>();
-  const [wordListText, setWordListText] = useState<string>("");
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -70,23 +74,21 @@ export default function Input({
     }, 300);
 
     if (!isStarted && inputValue.toLowerCase() == "ready") {
-      // play some game start sound
-
       setInputValue("");
       setIsStarted(true);
     } else if (currentWord?.answers.includes(inputValue.toLowerCase())) {
       playCorrectSound(correctRef);
       setIsSuccess(true);
-      setUserWords([toTitleCase(inputValue), ...userWords]);
+      setCorrectWordsData([
+        {
+          ...currentWord,
+          userAnswer: toTitleCase(inputValue),
+        },
+        ...correctWordsData,
+      ]);
+
       if (allWords) setCurrentWord(allWords[currentWordIndex + 1]);
       setCurrentWordIndex(currentWordIndex + 1);
-      setWordListText(
-        wordListText +
-          toTitleCase(currentWord.word) +
-          " --> " +
-          toTitleCase(inputValue) +
-          "\n"
-      );
       setInputValue("");
     } else {
       playErrorSound(errorRef);
@@ -169,35 +171,34 @@ export default function Input({
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
             />
-            <div className="absolute top-2 right-2">
-              <button
-                className="rounded-full py-3 px-1 hover:bg-gray-100"
-                type="submit"
-              >
-                <svg
-                  width="18px"
-                  height="18px"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  color="#000000"
-                >
-                  <path
-                    d="M3 12h18m0 0l-8.5-8.5M21 12l-8.5 8.5"
-                    stroke="#000000"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></path>
-                </svg>
-              </button>
-            </div>
           </div>
-          <div className="flex items-center justify-center pt-3">
+          <div className="flex items-center justify-center pt-3 gap-x-3">
+            <button
+              className="shadow-inner py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:opacity-40"
+              type="submit"
+            >
+              Submit (Enter)
+              <svg
+                width="15px"
+                height="15px"
+                viewBox="0 0 24 24"
+                strokeWidth="2.5"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                color="#000000"
+              >
+                <path
+                  d="M3 12h18m0 0l-8.5-8.5M21 12l-8.5 8.5"
+                  stroke="#000000"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                ></path>
+              </svg>
+            </button>
             <button
               disabled={!isStarted}
-              className="shadow-inner py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:opacity-40"
+              className="py-2 px-3 bg-yellow-400 hover:bg-yellow-500 rounded-lg text-black text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-yellow-400 disabled:hover:bg-yellow-400 disabled:opacity-40"
               onClick={handleSkip}
             >
               Skip
@@ -208,10 +209,10 @@ export default function Input({
                 fill="none"
                 stroke-width="2.5"
                 viewBox="0 0 24 24"
-                color="#000000"
+                color="black"
               >
                 <path
-                  stroke="#000000"
+                  stroke="black"
                   stroke-width="2.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -226,8 +227,8 @@ export default function Input({
       <GameEndAlert
         open={gameEnded}
         setOpen={setGameEnded}
-        userWords={userWords}
-        setUserWords={setUserWords}
+        correctWordsData={correctWordsData}
+        setCorrectWordsData={setCorrectWordsData}
         setInputValue={setInputValue}
       />
     </>

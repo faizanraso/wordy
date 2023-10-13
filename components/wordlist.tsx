@@ -3,11 +3,19 @@ import React from "react";
 import { toTitleCase } from "@/app/utils/title-case";
 
 interface WordListProps {
-  words: string[];
+  correctWordsData: {
+    word: string;
+    example: string;
+    possibleAnswers: string[];
+    userAnswer: string;
+  }[];
   gameEnded: boolean;
 }
 
-export default function WordList({ words, gameEnded }: WordListProps) {
+export default function WordList({
+  correctWordsData,
+  gameEnded,
+}: WordListProps) {
   return (
     <section>
       <div className="w-[350px] bg-gray-100 rounded-md text-center py-3">
@@ -15,7 +23,7 @@ export default function WordList({ words, gameEnded }: WordListProps) {
           <h1 className="font-semibold">Synonyms</h1>
         </div>
         <div className="pt-3 space-y-1">
-          {!words.length ? (
+          {!correctWordsData.length ? (
             <div className="">
               {!gameEnded ? (
                 <p className="text-xs font-medium">
@@ -24,19 +32,17 @@ export default function WordList({ words, gameEnded }: WordListProps) {
               ) : null}
             </div>
           ) : null}
-          <ul>
-            {words
-              ? words.map((word) => (
+          <ul className="gap-y-1">
+            {correctWordsData
+              ? correctWordsData.map((wordData) => (
                   <li
                     className="text-sm font-medium transition-opacity ease-in duration-150 opacity-100"
-                    key={word}
+                    key={wordData.word}
                   >
-                    {toTitleCase(word)}
+                    {toTitleCase(wordData.userAnswer)}
                   </li>
                 ))
               : null}
-
-            {gameEnded ? <p>diplay rmeaning words</p> : null}
           </ul>
         </div>
       </div>
