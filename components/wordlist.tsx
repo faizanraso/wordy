@@ -43,8 +43,6 @@ export default function WordList({
                   </li>
                 ))
               : null}
-
-            {gameEnded ? <p>diplay rmeaning words</p> : null}
           </ul>
         </div>
       </div>

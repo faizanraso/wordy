@@ -39,16 +39,22 @@ export default function GameEndAlert({
         <AlertDialogHeader>
           <AlertDialogTitle>Results</AlertDialogTitle>
           <AlertDialogDescription>
-            <ul>
-              {correctWordsData.map((wordData) => (
-                <li
-                  key={wordData.word}
-                  className="text-green-700 font-medium tracking-wide"
-                >
-                  {wordData.userAnswer}
-                </li>
-              ))}
-            </ul>
+            {correctWordsData.length ? (
+              <ul>
+                {correctWordsData.map((wordData) => (
+                  <li
+                    key={wordData.word}
+                    className="text-green-700 font-medium tracking-wide"
+                  >
+                    {wordData.userAnswer}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div>
+                <p>no words correctly answered</p>
+              </div>
+            )}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="items-center justify-center">
