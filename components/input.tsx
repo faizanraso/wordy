@@ -133,7 +133,7 @@ export default function Input({
 
   return (
     <>
-      <div className="items-center justify-center text-center py-5 w-[400px]">
+      <div className="items-center justify-center text-center py-5 px-3 w-[350px]">
         {isStarted ? (
           <div className="">
             <p className="text-sm font-medium">
