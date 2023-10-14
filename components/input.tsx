@@ -52,6 +52,10 @@ export default function Input({
   }, [data]);
 
   useEffect(() => {
+    if (gameEnded && inputRef.current) inputRef.current.blur();
+  });
+
+  useEffect(() => {
     async function startGame() {
       if (allWords) setCurrentWord(allWords[currentWordIndex]);
     }
@@ -129,7 +133,7 @@ export default function Input({
 
   return (
     <>
-      <div className="items-center justify-center text-center py-5 w-[450px]">
+      <div className="items-center justify-center text-center py-5 w-[400px]">
         {isStarted ? (
           <div className="">
             <p className="text-sm font-medium">
