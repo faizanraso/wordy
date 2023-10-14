@@ -17,7 +17,6 @@ export default function Timer({
   timeRemaining,
   setTimeRemaining,
 }: TimerProps) {
-
   useEffect(() => {
     if (isStarted && timeRemaining > 0) {
       setTimeout(() => setTimeRemaining(timeRemaining - 1), 1000);
@@ -26,7 +25,7 @@ export default function Timer({
     if (timeRemaining <= 0) {
       setIsStarted(false);
       setGameEnded(true);
-      setTimeRemaining(30);
+      setTimeRemaining(45);
     }
   }, [timeRemaining, isStarted]);
 

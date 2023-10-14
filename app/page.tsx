@@ -8,7 +8,7 @@ import Footer from "@/components/layout/footer";
 import Timer from "@/components/timer";
 
 export default function Home() {
-  const [correctWordsData, setCorrectWordsData] = useState<
+  const [gameWordsData, setGameWordsData] = useState<
     {
       definition: string;
       possibleAnswers: string[];
@@ -17,7 +17,7 @@ export default function Home() {
   >([]);
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [gameEnded, setGameEnded] = useState<boolean>(false);
-  const [timeRemaining, setTimeRemaining] = useState<number>(30);
+  const [timeRemaining, setTimeRemaining] = useState<number>(45);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -31,15 +31,15 @@ export default function Home() {
           setGameEnded={setGameEnded}
         />
         <Input
-          correctWordsData={correctWordsData}
-          setCorrectWordsData={setCorrectWordsData}
+          gameWordsData={gameWordsData}
+          setGameWordsData={setGameWordsData}
           isStarted={isStarted}
           setIsStarted={setIsStarted}
           gameEnded={gameEnded}
           setGameEnded={setGameEnded}
           setTimeRemaining={setTimeRemaining}
         />
-        <WordList correctWordsData={correctWordsData} gameEnded={gameEnded} />
+        <WordList gameWordsData={gameWordsData} gameEnded={gameEnded} />
       </main>
       <Footer />
     </div>

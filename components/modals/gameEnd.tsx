@@ -11,24 +11,24 @@ import {
 interface GameEndAlertProps {
   open: boolean;
   setOpen: any;
-  correctWordsData: {
+  gameWordsData: {
     definition: string;
     possibleAnswers: string[];
     userAnswer: string;
   }[];
-  setCorrectWordsData: any;
+  setGameWordsData: any;
   setInputValue: (arg0: string) => void;
 }
 
 export default function GameEndAlert({
   open,
   setOpen,
-  correctWordsData,
-  setCorrectWordsData,
+  gameWordsData,
+  setGameWordsData,
   setInputValue,
 }: GameEndAlertProps) {
   function resetGame() {
-    setCorrectWordsData([]);
+    setGameWordsData([]);
     setInputValue("");
   }
 
@@ -38,9 +38,9 @@ export default function GameEndAlert({
         <AlertDialogHeader>
           <AlertDialogTitle>Results</AlertDialogTitle>
           <AlertDialogDescription>
-            {correctWordsData.length ? (
+            {gameWordsData.length ? (
               <ul>
-                {correctWordsData.map((wordData) => (
+                {gameWordsData.map((wordData) => (
                   <li
                     key={wordData.userAnswer}
                     className="text-green-700 font-medium tracking-wide"

@@ -1,9 +1,7 @@
 import React from "react";
 
-import { toTitleCase } from "@/app/utils/title-case";
-
 interface WordListProps {
-  correctWordsData: {
+  gameWordsData: {
     definition: string;
     possibleAnswers: string[];
     userAnswer: string;
@@ -12,7 +10,7 @@ interface WordListProps {
 }
 
 export default function WordList({
-  correctWordsData,
+  gameWordsData,
   gameEnded,
 }: WordListProps) {
   return (
@@ -22,7 +20,7 @@ export default function WordList({
           <h1 className="font-semibold">Correct Answers</h1>
         </div>
         <div className="pt-3 space-y-1">
-          {!correctWordsData.length ? (
+          {!gameWordsData.length ? (
             <div className="">
               {!gameEnded ? (
                 <p className="text-xs font-medium">
@@ -32,13 +30,13 @@ export default function WordList({
             </div>
           ) : null}
           <ul className="gap-y-1">
-            {correctWordsData
-              ? correctWordsData.map((wordData) => (
+            {gameWordsData
+              ? gameWordsData.map((wordData) => (
                   <li
                     className="text-sm font-medium transition-opacity ease-in duration-150 opacity-100"
                     key={wordData.userAnswer}
                   >
-                    {toTitleCase(wordData.userAnswer)}
+                    {wordData.userAnswer}
                   </li>
                 ))
               : null}

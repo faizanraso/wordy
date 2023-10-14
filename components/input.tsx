@@ -11,12 +11,12 @@ import { toTitleCase } from "@/app/utils/title-case";
 import shuffleArray from "@/app/utils/shuffle-array";
 
 interface InputProps {
-  correctWordsData: {
+  gameWordsData: {
     definition: string;
     possibleAnswers: string[];
     userAnswer: string;
   }[];
-  setCorrectWordsData: any;
+  setGameWordsData: any;
   isStarted: boolean;
   setIsStarted: (arg0: boolean) => void;
   gameEnded: boolean;
@@ -25,8 +25,8 @@ interface InputProps {
 }
 
 export default function Input({
-  correctWordsData,
-  setCorrectWordsData,
+  gameWordsData,
+  setGameWordsData,
   isStarted,
   setIsStarted,
   gameEnded,
@@ -86,12 +86,16 @@ export default function Input({
     ) {
       playCorrectSound(correctRef);
       setIsSuccess(true);
-      setCorrectWordsData([
+      setGameWordsData([
         {
           ...currentWord,
-          userAnswer: toTitleCase(inputValue),
+          userAnswer:
+            inputValue.length <= 3 &&
+            currentWord?.possibleAnswers.includes(inputValue.toUpperCase())
+              ? inputValue.toUpperCase()
+              : toTitleCase(inputValue),
         },
-        ...correctWordsData,
+        ...gameWordsData,
       ]);
 
       if (allWords) setCurrentWord(allWords[currentWordIndex + 1]);
@@ -229,8 +233,8 @@ export default function Input({
       <GameEndAlert
         open={gameEnded}
         setOpen={setGameEnded}
-        correctWordsData={correctWordsData}
-        setCorrectWordsData={setCorrectWordsData}
+        gameWordsData={gameWordsData}
+        setGameWordsData={setGameWordsData}
         setInputValue={setInputValue}
       />
     </>
