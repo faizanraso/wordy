@@ -62,6 +62,12 @@ export default function Input({
     }
   }, [isStarted, allWords]);
 
+  useEffect(() => {
+    if (gameEnded) {
+      setInputValue("");
+    }
+  }, [gameEnded]);
+
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -102,7 +108,7 @@ export default function Input({
   }
 
   function gameStartNotification() {
-    toast("Start guessing synonyms!", {
+    toast("Start guessing words!", {
       duration: 4000,
       position: "top-center",
       className: "font-semibold ",
@@ -119,7 +125,7 @@ export default function Input({
 
   return (
     <>
-      <div className="text-center py-4 w-[450px]">
+      <div className="items-center justify-center text-center py-5 w-[450px]">
         {isStarted ? (
           <div className="">
             <p className="text-sm font-medium">

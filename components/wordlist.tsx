@@ -19,14 +19,14 @@ export default function WordList({
     <section>
       <div className="w-[350px] bg-gray-100 rounded-md text-center py-3">
         <div className="">
-          <h1 className="font-semibold">Synonyms</h1>
+          <h1 className="font-semibold">Correct Answers</h1>
         </div>
         <div className="pt-3 space-y-1">
           {!correctWordsData.length ? (
             <div className="">
               {!gameEnded ? (
                 <p className="text-xs font-medium">
-                  Any correct synonyms you guess will show up here
+                  Any correct words you guess will show up here
                 </p>
               ) : null}
             </div>
