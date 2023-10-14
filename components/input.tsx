@@ -12,8 +12,7 @@ import shuffleArray from "@/app/utils/shuffle-array";
 
 interface InputProps {
   correctWordsData: {
-    word: string;
-    example: string;
+    definition: string;
     possibleAnswers: string[];
     userAnswer: string;
   }[];
@@ -76,7 +75,9 @@ export default function Input({
     if (!isStarted && inputValue.toLowerCase() == "ready") {
       setInputValue("");
       setIsStarted(true);
-    } else if (currentWord?.answers.includes(inputValue.toLowerCase())) {
+    } else if (
+      currentWord?.possibleAnswers.includes(inputValue.toLowerCase())
+    ) {
       playCorrectSound(correctRef);
       setIsSuccess(true);
       setCorrectWordsData([
@@ -118,18 +119,13 @@ export default function Input({
 
   return (
     <>
-      <div className="text-center py-3">
+      <div className="text-center py-4 w-[450px]">
         {isStarted ? (
-          <div className="space-y-3">
-            <p className="font-semibold tracking-wide">
-              <span className="uppercase text-xl transition ease-in-out">
-                {currentWord?.word}
-              </span>
-            </p>
-            <p className="text-xs font-medium">
+          <div className="">
+            <p className="text-sm font-medium">
               {" "}
-              <span className="font-semibold">Example:</span>{" "}
-              {currentWord?.example}
+              <span className="font-semibold">Definition:</span>{" "}
+              {currentWord?.definition}
             </p>
           </div>
         ) : (

@@ -4,8 +4,7 @@ import { toTitleCase } from "@/app/utils/title-case";
 
 interface WordListProps {
   correctWordsData: {
-    word: string;
-    example: string;
+    definition: string;
     possibleAnswers: string[];
     userAnswer: string;
   }[];
@@ -37,7 +36,7 @@ export default function WordList({
               ? correctWordsData.map((wordData) => (
                   <li
                     className="text-sm font-medium transition-opacity ease-in duration-150 opacity-100"
-                    key={wordData.word}
+                    key={wordData.userAnswer}
                   >
                     {toTitleCase(wordData.userAnswer)}
                   </li>

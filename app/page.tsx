@@ -10,8 +10,7 @@ import Timer from "@/components/timer";
 export default function Home() {
   const [correctWordsData, setCorrectWordsData] = useState<
     {
-      word: string;
-      example: string;
+      definition: string;
       possibleAnswers: string[];
       userAnswer: string;
     }[]

@@ -12,8 +12,7 @@ interface GameEndAlertProps {
   open: boolean;
   setOpen: any;
   correctWordsData: {
-    word: string;
-    example: string;
+    definition: string;
     possibleAnswers: string[];
     userAnswer: string;
   }[];
@@ -43,7 +42,7 @@ export default function GameEndAlert({
               <ul>
                 {correctWordsData.map((wordData) => (
                   <li
-                    key={wordData.word}
+                    key={wordData.userAnswer}
                     className="text-green-700 font-medium tracking-wide"
                   >
                     {wordData.userAnswer}
