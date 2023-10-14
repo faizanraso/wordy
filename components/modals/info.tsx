@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,8 +11,20 @@ import {
 } from "@/components/ui/dialog";
 
 export default function Info() {
+  const [displayModal, setDisplayModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    const bool = localStorage.getItem("newUser");
+
+    if (bool == "true") {
+      setDisplayModal(true);
+      localStorage.setItem("newUser", "false");
+    }
+    
+  }, [displayModal]);
+
   return (
-    <Dialog>
+    <Dialog onOpenChange={setDisplayModal} open={displayModal}>
       <DialogTrigger>
         <svg
           viewBox="0 0 24 24"

@@ -18,7 +18,6 @@ export default function Header() {
               </span>
             </div>
           </Link>
-
           <div className="flex items-center gap-4">
             <div className="flex gap-1">
               <Info />
