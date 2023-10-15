@@ -217,15 +217,15 @@ export default function Input({
                 width="15px"
                 height="15px"
                 fill="none"
-                stroke-width="2.5"
+                strokeWidth="2.5"
                 viewBox="0 0 24 24"
                 color="black"
               >
                 <path
                   stroke="black"
-                  stroke-width="2.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M18 7v10M6.972 5.267A.6.6 0 0 0 6 5.738v12.524a.6.6 0 0 0 .972.47l7.931-6.261a.6.6 0 0 0 0-.942L6.972 5.267Z"
                 ></path>
               </svg>

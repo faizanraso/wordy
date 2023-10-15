@@ -14,13 +14,11 @@ export default function Info() {
   const [displayModal, setDisplayModal] = useState<boolean>(false);
 
   useEffect(() => {
-    const bool = localStorage.getItem("newUser");
-
-    if (bool == "true") {
+    const showInstructions = localStorage.getItem("showInstructions");
+    if (showInstructions === null) {
       setDisplayModal(true);
-      localStorage.setItem("newUser", "false");
+      localStorage.setItem("showInstructions", "false");
     }
-    
   }, [displayModal]);
 
   return (
