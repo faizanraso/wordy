@@ -53,13 +53,6 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model SynonymLevels {
-  level_id String   @id @unique @default(cuid())
-  word     String   @unique @default("")
-  example  String   @default("")
-  answers  String[]
-}
-
 model DefinitionLevels {
   level_id        String   @id @unique @default(cuid())
   definition      String   @default("")
