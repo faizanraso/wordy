@@ -188,7 +188,7 @@ export default function Input({
               type="submit"
             >
               Submit (
-              <kbd className="text-xs px-2 py-1.5 font-semibold text-gray-800 bg-gray-100 border border-gray-300 rounded-lg">
+              <kbd className="text-[0.6rem] px-1.5 py-0.5 font-semibold text-gray-800 bg-gray-100 border border-gray-300 rounded-lg">
                 Enter
               </kbd>
               )
@@ -212,7 +212,7 @@ export default function Input({
             </button>
             <button
               disabled={!isStarted}
-              className="py-2 px-3 bg-yellow-400 hover:bg-yellow-500 rounded-lg text-black text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-yellow-400 disabled:hover:bg-yellow-400 disabled:opacity-40"
+              className="py-2 px-3 bg-yellow-400 hover:bg-yellow-500 rounded-lg text-black text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-yellow-400 disabled:hover:bg-yellow-400 disabled:opacity-40 items-center justify-center"
               onClick={handleSkip}
             >
               Skip
