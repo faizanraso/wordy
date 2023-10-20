@@ -1,3 +1,4 @@
+import { toTitleCase } from "@/app/utils/title-case";
 import React from "react";
 
 interface WordListProps {
@@ -32,14 +33,28 @@ export default function WordList({ gameWordsData, gameEnded }: WordListProps) {
           ) : null}
           <ul className="gap-y-1">
             {gameWordsData
-              ? gameWordsData.map((wordData) => (
-                  <li
-                    className="text-sm font-medium transition-opacity ease-in duration-150 opacity-100"
-                    key={wordData.userAnswer}
-                  >
-                    {wordData.userAnswer}
-                  </li>
-                ))
+              ? gameWordsData.map((wordData) =>
+                  wordData.isCorrect ? (
+                    <li
+                      className="text-sm font-medium text-green-600"
+                      key={wordData.userAnswer}
+                    >
+                      {wordData.userAnswer}
+                    </li>
+                  ) : (
+                    <li
+                      className="text-sm font-medium text-red-600"
+                      key={wordData.possibleAnswers[0]}
+                    >
+                      {wordData.possibleAnswers[0].length <= 3 &&
+                      wordData.possibleAnswers.includes(
+                        wordData.possibleAnswers[0].toUpperCase()
+                      )
+                        ? wordData.possibleAnswers[0].toUpperCase()
+                        : toTitleCase(wordData.possibleAnswers[0])}
+                    </li>
+                  )
+                )
               : null}
           </ul>
         </div>

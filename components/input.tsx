@@ -33,7 +33,6 @@ export default function Input({
   setIsStarted,
   gameEnded,
   setGameEnded,
-  isCorrect,
 }: InputProps) {
   const [inputValue, setInputValue] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
