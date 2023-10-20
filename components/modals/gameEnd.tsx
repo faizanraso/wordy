@@ -41,19 +41,19 @@ export default function GameEndAlert({
           <AlertDialogTitle>Results</AlertDialogTitle>
           <AlertDialogDescription>
             {gameWordsData.length ? (
-              <ul>
+              <ul className="gap-y-1 text-center items-center justify-center">
                 {gameWordsData
                   ? gameWordsData.map((wordData) =>
                       wordData.isCorrect ? (
                         <li
-                          className="text-sm font-medium text-green-600"
+                          className="text-sm font-medium text-green-700"
                           key={wordData.userAnswer}
                         >
                           {wordData.userAnswer}
                         </li>
                       ) : (
                         <li
-                          className="text-sm font-medium text-red-600"
+                          className="text-sm font-medium text-red-700"
                           key={wordData.possibleAnswers[0]}
                         >
                           {wordData.possibleAnswers[0].length <= 3 &&

@@ -24,9 +24,9 @@ export default function WordList({ gameWordsData, gameEnded }: WordListProps) {
               {!gameEnded ? (
                 <p className="text-xs font-medium">
                   Answers you guess correctly will show up here in{" "}
-                  <span className="text-green-600 font-semibold">green</span>,{" "}
+                  <span className="text-green-700 font-semibold">green</span>,{" "}
                   while skipped ones will show up in{" "}
-                  <span className="text-red-600 font-semibold">red</span>
+                  <span className="text-red-700 font-semibold">red</span>
                 </p>
               ) : null}
             </div>
@@ -36,14 +36,14 @@ export default function WordList({ gameWordsData, gameEnded }: WordListProps) {
               ? gameWordsData.map((wordData) =>
                   wordData.isCorrect ? (
                     <li
-                      className="text-sm font-medium text-green-600"
+                      className="text-sm font-medium text-green-700"
                       key={wordData.userAnswer}
                     >
                       {wordData.userAnswer}
                     </li>
                   ) : (
                     <li
-                      className="text-sm font-medium text-red-600"
+                      className="text-sm font-medium text-red-700"
                       key={wordData.possibleAnswers[0]}
                     >
                       {wordData.possibleAnswers[0].length <= 3 &&
