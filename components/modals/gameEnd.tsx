@@ -1,3 +1,4 @@
+import { toTitleCase } from "@/app/utils/title-case";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -41,14 +42,30 @@ export default function GameEndAlert({
           <AlertDialogDescription>
             {gameWordsData.length ? (
               <ul>
-                {gameWordsData.map((wordData) => (
-                  <li
-                    key={wordData.userAnswer}
-                    className="text-green-700 font-medium tracking-wide"
-                  >
-                    {wordData.userAnswer}
-                  </li>
-                ))}
+                {gameWordsData
+                  ? gameWordsData.map((wordData) =>
+                      wordData.isCorrect ? (
+                        <li
+                          className="text-sm font-medium text-green-600"
+                          key={wordData.userAnswer}
+                        >
+                          {wordData.userAnswer}
+                        </li>
+                      ) : (
+                        <li
+                          className="text-sm font-medium text-red-600"
+                          key={wordData.possibleAnswers[0]}
+                        >
+                          {wordData.possibleAnswers[0].length <= 3 &&
+                          wordData.possibleAnswers.includes(
+                            wordData.possibleAnswers[0].toUpperCase()
+                          )
+                            ? wordData.possibleAnswers[0].toUpperCase()
+                            : toTitleCase(wordData.possibleAnswers[0])}
+                        </li>
+                      )
+                    )
+                  : null}
               </ul>
             ) : (
               <div>
