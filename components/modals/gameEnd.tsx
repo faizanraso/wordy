@@ -15,6 +15,7 @@ interface GameEndAlertProps {
     definition: string;
     possibleAnswers: string[];
     userAnswer: string;
+    isCorrect: boolean;
   }[];
   setGameWordsData: any;
   setInputValue: (arg0: string) => void;
@@ -51,7 +52,7 @@ export default function GameEndAlert({
               </ul>
             ) : (
               <div>
-                <p>no words correctly answered</p>
+                <p>No words correctly answered</p>
               </div>
             )}
           </AlertDialogDescription>

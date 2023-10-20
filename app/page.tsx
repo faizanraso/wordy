@@ -13,6 +13,7 @@ export default function Home() {
       definition: string;
       possibleAnswers: string[];
       userAnswer: string;
+      isCorrect: boolean;
     }[]
   >([]);
   const [isStarted, setIsStarted] = useState<boolean>(false);

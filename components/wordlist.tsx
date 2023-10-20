@@ -5,6 +5,7 @@ interface WordListProps {
     definition: string;
     possibleAnswers: string[];
     userAnswer: string;
+    isCorrect: boolean;
   }[];
   gameEnded: boolean;
 }
