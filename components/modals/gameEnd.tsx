@@ -1,3 +1,4 @@
+import { toTitleCase } from "@/app/utils/title-case";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,6 +16,7 @@ interface GameEndAlertProps {
     definition: string;
     possibleAnswers: string[];
     userAnswer: string;
+    isCorrect: boolean;
   }[];
   setGameWordsData: any;
   setInputValue: (arg0: string) => void;
@@ -39,19 +41,35 @@ export default function GameEndAlert({
           <AlertDialogTitle>Results</AlertDialogTitle>
           <AlertDialogDescription>
             {gameWordsData.length ? (
-              <ul>
-                {gameWordsData.map((wordData) => (
-                  <li
-                    key={wordData.userAnswer}
-                    className="text-green-700 font-medium tracking-wide"
-                  >
-                    {wordData.userAnswer}
-                  </li>
-                ))}
+              <ul className="gap-y-1 text-center items-center justify-center">
+                {gameWordsData
+                  ? gameWordsData.map((wordData) =>
+                      wordData.isCorrect ? (
+                        <li
+                          className="text-sm font-medium text-green-700"
+                          key={wordData.userAnswer}
+                        >
+                          {wordData.userAnswer}
+                        </li>
+                      ) : (
+                        <li
+                          className="text-sm font-medium text-red-700"
+                          key={wordData.possibleAnswers[0]}
+                        >
+                          {wordData.possibleAnswers[0].length <= 3 &&
+                          wordData.possibleAnswers.includes(
+                            wordData.possibleAnswers[0].toUpperCase()
+                          )
+                            ? wordData.possibleAnswers[0].toUpperCase()
+                            : toTitleCase(wordData.possibleAnswers[0])}
+                        </li>
+                      )
+                    )
+                  : null}
               </ul>
             ) : (
               <div>
-                <p>no words correctly answered</p>
+                <p>No words correctly answered</p>
               </div>
             )}
           </AlertDialogDescription>

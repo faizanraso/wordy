@@ -9,12 +9,14 @@ import GameEndAlert from "./modals/gameEnd";
 import { playCorrectSound, playErrorSound } from "@/app/utils/play-sounds";
 import { toTitleCase } from "@/app/utils/title-case";
 import shuffleArray from "@/app/utils/shuffle-array";
+import gameStartNotification from "@/app/utils/game-start-notif";
 
 interface InputProps {
   gameWordsData: {
     definition: string;
     possibleAnswers: string[];
     userAnswer: string;
+    isCorrect: boolean; //was the user answer correct
   }[];
   setGameWordsData: any;
   isStarted: boolean;
@@ -53,7 +55,7 @@ export default function Input({
 
   useEffect(() => {
     if (gameEnded && inputRef.current) inputRef.current.blur();
-  });
+  }, [gameEnded]);
 
   useEffect(() => {
     async function startGame() {
@@ -93,6 +95,7 @@ export default function Input({
       setGameWordsData([
         {
           ...currentWord,
+          isCorrect: true,
           userAnswer:
             inputValue.length <= 3 &&
             currentWord?.possibleAnswers.includes(inputValue.toUpperCase())
@@ -115,16 +118,16 @@ export default function Input({
     }
   }
 
-  function gameStartNotification() {
-    toast("Start guessing words!", {
-      duration: 4000,
-      position: "top-center",
-      className: "font-semibold ",
-    });
-  }
-
   function handleSkip() {
     if (allWords) {
+      setGameWordsData([
+        {
+          ...currentWord,
+          isCorrect: false,
+          userAnswer: "",
+        },
+        ...gameWordsData,
+      ]);
       setCurrentWord(allWords[currentWordIndex + 1]);
       setCurrentWordIndex(currentWordIndex + 1);
       setInputValue("");
