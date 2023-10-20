@@ -184,14 +184,13 @@ export default function Input({
           </div>
           <div className="flex items-center justify-center pt-3 gap-x-3">
             <button
-              className="shadow-inner py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:opacity-40 items-center justify-center"
+              className="shadow-inner py-2.5 px-8 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:opacity-40 items-center justify-center"
               type="submit"
             >
-              Submit (
-              <kbd className="text-[0.6rem] px-1.5 py-0.5 font-semibold text-gray-800 bg-gray-100 border border-gray-300 rounded-lg">
+              Submit
+              {/* <kbd className="text-[0.5rem] px-1.5 py-0.5 font-semibold text-gray-800 bg-gray-100 border border-gray-300 rounded-lg">
                 Enter
-              </kbd>
-              )
+              </kbd> */}
               <svg
                 width="15px"
                 height="15px"
@@ -212,7 +211,7 @@ export default function Input({
             </button>
             <button
               disabled={!isStarted}
-              className="py-2 px-3 bg-yellow-400 hover:bg-yellow-500 rounded-lg text-black text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-yellow-400 disabled:hover:bg-yellow-400 disabled:opacity-40 items-center justify-center"
+              className="py-2.5 px-3 bg-yellow-400 hover:bg-yellow-500 rounded-lg text-black text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-yellow-400 disabled:hover:bg-yellow-400 disabled:opacity-40 items-center justify-center"
               onClick={handleSkip}
             >
               Skip
