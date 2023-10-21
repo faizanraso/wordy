@@ -8,6 +8,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface GameEndAlertProps {
   open: boolean;
@@ -41,27 +46,44 @@ export default function GameEndAlert({
           <AlertDialogTitle>Results</AlertDialogTitle>
           <AlertDialogDescription>
             {gameWordsData.length ? (
-              <ul className="gap-y-1 text-center items-center justify-center">
+              <ul className="text-center items-center justify-center">
                 {gameWordsData
                   ? gameWordsData.map((wordData) =>
                       wordData.isCorrect ? (
-                        <li
-                          className="text-sm font-medium text-green-700"
-                          key={wordData.userAnswer}
-                        >
-                          {wordData.userAnswer}
+                        <li className="pt-0.5" key={wordData.userAnswer}>
+                          <Popover>
+                            <PopoverTrigger>
+                              {" "}
+                              <p className="font-semibold text-green-700 ">
+                                {wordData.userAnswer}
+                              </p>
+                            </PopoverTrigger>
+                            <PopoverContent side="top">
+                              <p className="text-xs">{wordData.definition}</p>
+                            </PopoverContent>
+                          </Popover>
                         </li>
                       ) : (
                         <li
-                          className="text-sm font-medium text-red-700"
+                          className="pt-0.5"
                           key={wordData.possibleAnswers[0]}
                         >
-                          {wordData.possibleAnswers[0].length <= 3 &&
-                          wordData.possibleAnswers.includes(
-                            wordData.possibleAnswers[0].toUpperCase()
-                          )
-                            ? wordData.possibleAnswers[0].toUpperCase()
-                            : toTitleCase(wordData.possibleAnswers[0])}
+                          <Popover>
+                            <PopoverTrigger>
+                              {" "}
+                              <p className="font-semibold text-red-700 ">
+                                {wordData.possibleAnswers[0].length <= 3 &&
+                                wordData.possibleAnswers.includes(
+                                  wordData.possibleAnswers[0].toUpperCase()
+                                )
+                                  ? wordData.possibleAnswers[0].toUpperCase()
+                                  : toTitleCase(wordData.possibleAnswers[0])}
+                              </p>
+                            </PopoverTrigger>
+                            <PopoverContent side="top">
+                              <p className="text-xs">{wordData.definition}</p>
+                            </PopoverContent>
+                          </Popover>
                         </li>
                       )
                     )
