@@ -50,14 +50,11 @@ export default function GameEndAlert({
                 {gameWordsData
                   ? gameWordsData.map((wordData) =>
                       wordData.isCorrect ? (
-                        <li
-                          className="text-sm font-medium text-green-700 pt-0.5"
-                          key={wordData.userAnswer}
-                        >
+                        <li className="pt-0.5" key={wordData.userAnswer}>
                           <Popover>
                             <PopoverTrigger>
                               {" "}
-                              <p className="">
+                              <p className="font-semibold text-green-700 ">
                                 {wordData.userAnswer}
                               </p>
                             </PopoverTrigger>
@@ -68,13 +65,13 @@ export default function GameEndAlert({
                         </li>
                       ) : (
                         <li
-                          className="text-sm font-medium text-red-700 pt-0.5"
+                          className="pt-0.5"
                           key={wordData.possibleAnswers[0]}
                         >
                           <Popover>
                             <PopoverTrigger>
                               {" "}
-                              <p className="">
+                              <p className="font-semibold text-red-700 ">
                                 {wordData.possibleAnswers[0].length <= 3 &&
                                 wordData.possibleAnswers.includes(
                                   wordData.possibleAnswers[0].toUpperCase()
