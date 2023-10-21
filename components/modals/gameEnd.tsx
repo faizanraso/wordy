@@ -8,6 +8,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Arrow } from "@radix-ui/react-tooltip";
 
 interface GameEndAlertProps {
   open: boolean;
@@ -41,27 +48,31 @@ export default function GameEndAlert({
           <AlertDialogTitle>Results</AlertDialogTitle>
           <AlertDialogDescription>
             {gameWordsData.length ? (
-              <ul className="gap-y-1 text-center items-center justify-center">
+              <ul className="text-center items-center justify-center">
                 {gameWordsData
                   ? gameWordsData.map((wordData) =>
                       wordData.isCorrect ? (
                         <li
-                          className="text-sm font-medium text-green-700"
+                          className="text-sm font-medium text-green-700 pt-0.5"
                           key={wordData.userAnswer}
                         >
-                          {wordData.userAnswer}
+                          <p className="hover:scale-110 transition ease-in-out duration-150">
+                            {wordData.userAnswer}
+                          </p>
                         </li>
                       ) : (
                         <li
-                          className="text-sm font-medium text-red-700"
+                          className="text-sm font-medium text-red-700 pt-0.5"
                           key={wordData.possibleAnswers[0]}
                         >
-                          {wordData.possibleAnswers[0].length <= 3 &&
-                          wordData.possibleAnswers.includes(
-                            wordData.possibleAnswers[0].toUpperCase()
-                          )
-                            ? wordData.possibleAnswers[0].toUpperCase()
-                            : toTitleCase(wordData.possibleAnswers[0])}
+                          <p className="hover:scale-110 transition ease-in-out duration-150">
+                            {wordData.possibleAnswers[0].length <= 3 &&
+                            wordData.possibleAnswers.includes(
+                              wordData.possibleAnswers[0].toUpperCase()
+                            )
+                              ? wordData.possibleAnswers[0].toUpperCase()
+                              : toTitleCase(wordData.possibleAnswers[0])}
+                          </p>
                         </li>
                       )
                     )
