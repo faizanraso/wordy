@@ -8,13 +8,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Arrow } from "@radix-ui/react-tooltip";
 
 interface GameEndAlertProps {
   open: boolean;
