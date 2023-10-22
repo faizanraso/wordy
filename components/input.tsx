@@ -42,6 +42,9 @@ export default function Input({
   const [currentWord, setCurrentWord] = useState<any>();
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
 
+  const [startTime, setStartTime] = useState<number>(0);
+  const [timesArray, setTimesArray] = useState<number[]>([]);
+
   const inputRef = useRef<HTMLInputElement>(null);
   const correctRef = useRef<HTMLAudioElement>(null);
   const errorRef = useRef<HTMLAudioElement>(null);
@@ -54,7 +57,11 @@ export default function Input({
   }, [data]);
 
   useEffect(() => {
-    if (gameEnded && inputRef.current) inputRef.current.blur();
+    if (gameEnded && inputRef.current) {
+      setTimesArray([...timesArray, Date.now() - startTime]);
+      setStartTime(0);
+      inputRef.current.blur();
+    }
   }, [gameEnded]);
 
   useEffect(() => {
@@ -86,12 +93,15 @@ export default function Input({
 
     if (!isStarted && inputValue.toLowerCase() == "ready") {
       setInputValue("");
+      setStartTime(Date.now());
       setIsStarted(true);
     } else if (
       currentWord?.possibleAnswers.includes(inputValue.toLowerCase())
     ) {
       playCorrectSound(correctRef);
       setIsSuccess(true);
+      setTimesArray([...timesArray, Date.now() - startTime]);
+      setStartTime(Date.now());
       setGameWordsData([
         {
           ...currentWord,
@@ -104,7 +114,6 @@ export default function Input({
         },
         ...gameWordsData,
       ]);
-
       if (allWords) setCurrentWord(allWords[currentWordIndex + 1]);
       setCurrentWordIndex(currentWordIndex + 1);
       setInputValue("");
@@ -131,6 +140,7 @@ export default function Input({
       setCurrentWord(allWords[currentWordIndex + 1]);
       setCurrentWordIndex(currentWordIndex + 1);
       setInputValue("");
+      setStartTime(Date.now());
     }
   }
 
@@ -246,6 +256,7 @@ export default function Input({
         gameWordsData={gameWordsData}
         setGameWordsData={setGameWordsData}
         setInputValue={setInputValue}
+        timesArray={timesArray}
       />
     </>
   );

@@ -25,6 +25,7 @@ interface GameEndAlertProps {
     isCorrect: boolean;
   }[];
   setGameWordsData: any;
+  timesArray: number[];
   setInputValue: (arg0: string) => void;
 }
 
@@ -34,6 +35,7 @@ export default function GameEndAlert({
   gameWordsData,
   setGameWordsData,
   setInputValue,
+  timesArray,
 }: GameEndAlertProps) {
   function resetGame() {
     setGameWordsData([]);
@@ -44,6 +46,14 @@ export default function GameEndAlert({
     (total, x) => (x.isCorrect === true ? total + 1 : total),
     0
   );
+
+  const avgResponseTime = timesArray.length
+    ? Math.round(
+        (100 * timesArray.reduce((totalTime, x) => totalTime + x, 0)) /
+          timesArray.length /
+          1000
+      ) / 100
+    : 0;
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -63,8 +73,18 @@ export default function GameEndAlert({
                 <h1 className="">Correct Answers</h1>
                 <p className="text-2xl">{correctAnswers}</p>
               </div>
-              <div className="">
+              <div
+                className={cn(
+                  "flex flex-col font-semibold justify-center items-center gap-y-3",
+                  avgResponseTime < 5.5
+                    ? "text-green-700 "
+                    : avgResponseTime < 7.5
+                    ? "text-yellow-600"
+                    : "text-red-700"
+                )}
+              >
                 <h1>Avg Response Time</h1>
+                <p className="text-2xl">{avgResponseTime}</p>
               </div>
               <div>
                 <h1>Skipped Words</h1>
