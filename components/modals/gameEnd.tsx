@@ -183,7 +183,7 @@ export default function GameEndAlert({
                     ) : (
                       <div className="py-10 text-center items-center justify-center">
                         <p className="font-medium">
-                          Looks like you didn't really play.
+                          {"Error loading results."}
                         </p>
                       </div>
                     )}
@@ -191,7 +191,7 @@ export default function GameEndAlert({
                 ) : (
                   <div className="py-10 text-center items-center justify-center">
                     <p className="font-medium">
-                      Looks like you didn't really play.
+                      {"Looks like you didn't really play."}
                     </p>
                   </div>
                 )}
