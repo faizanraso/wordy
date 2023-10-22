@@ -43,8 +43,23 @@ export default function GameEndAlert({
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Results</AlertDialogTitle>
+          <AlertDialogTitle className="text-center items-center">
+            Results
+          </AlertDialogTitle>
           <AlertDialogDescription>
+            <div className="flex flex-row justify-between py-4 px-2">
+              <div className="flex flex-col justify-center items-center gap-y-3">
+                <h1 className="font-semibold text-green-700">Correct Answers</h1>
+                <p className="font-bold text-green-700 text-2xl">4</p>
+              </div>
+              <div className="">
+                <h1>Avg Response Time</h1>
+              </div>
+              <div>
+                <h1>Skipped Words</h1>
+              </div>
+            </div>
+
             {gameWordsData.length ? (
               <ul className="text-center items-center justify-center">
                 {gameWordsData
@@ -54,7 +69,7 @@ export default function GameEndAlert({
                           <Popover>
                             <PopoverTrigger>
                               {" "}
-                              <p className="font-semibold text-green-700 ">
+                              <p className="font-medium text-green-700 ">
                                 {wordData.userAnswer}
                               </p>
                             </PopoverTrigger>
@@ -71,7 +86,7 @@ export default function GameEndAlert({
                           <Popover>
                             <PopoverTrigger>
                               {" "}
-                              <p className="font-semibold text-red-700 ">
+                              <p className="font-medium text-red-700 ">
                                 {wordData.possibleAnswers[0].length <= 3 &&
                                 wordData.possibleAnswers.includes(
                                   wordData.possibleAnswers[0].toUpperCase()
