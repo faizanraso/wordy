@@ -1,4 +1,5 @@
 import { toTitleCase } from "@/app/utils/title-case";
+import { cn } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -39,18 +40,28 @@ export default function GameEndAlert({
     setInputValue("");
   }
 
+  const correctAnswers = gameWordsData.reduce(
+    (total, x) => (x.isCorrect === true ? total + 1 : total),
+    0
+  );
+
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-center items-center">
+          <AlertDialogTitle className="text-center items-center pb-2">
             Results
           </AlertDialogTitle>
           <AlertDialogDescription>
-            <div className="flex flex-row justify-between py-4 px-2">
-              <div className="flex flex-col justify-center items-center gap-y-3">
-                <h1 className="font-semibold text-green-700">Correct Answers</h1>
-                <p className="font-bold text-green-700 text-2xl">4</p>
+            <div className="flex flex-row justify-between py-5 px-2">
+              <div
+                className={cn(
+                  "flex flex-col font-semibold justify-center items-center gap-y-3",
+                  correctAnswers == 0 ? "text-red-700 " : "text-green-700"
+                )}
+              >
+                <h1 className="">Correct Answers</h1>
+                <p className="text-2xl">{correctAnswers}</p>
               </div>
               <div className="">
                 <h1>Avg Response Time</h1>
@@ -105,9 +116,7 @@ export default function GameEndAlert({
                   : null}
               </ul>
             ) : (
-              <div>
-                <p>No words correctly answered</p>
-              </div>
+              <div></div>
             )}
           </AlertDialogDescription>
         </AlertDialogHeader>
