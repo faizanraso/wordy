@@ -149,23 +149,21 @@ export default function Input({
   }
 
   return (
-    <>
-      <div className="items-center justify-center text-center py-5 w-[350px]">
-      <div className="">
-      </div>
-        {isStarted ? (
-          <div className="">
+    <section>
+      <div className="items-center justify-center text-center pt-3 pb-5 w-[350px]">
+        <div className="flex text-center justify-center items-center min-h-[80px]">
+          {isStarted ? (
             <p className="text-sm font-medium">
               {" "}
               <span className="font-semibold">Definition:</span>{" "}
               {currentWord?.definition}
             </p>
-          </div>
-        ) : (
-          <p className="font-semibold tracking-wide">
-            Type &quot;READY&quot; to Start
-          </p>
-        )}
+          ) : (
+            <p className="font-semibold tracking-wide text-xl">
+              Type &quot;READY&quot; to Start
+            </p>
+          )}
+        </div>
       </div>
       <div className="mb-3 relative">
         <form onSubmit={checkAnswer} noValidate>
@@ -264,6 +262,6 @@ export default function Input({
         setInputValue={setInputValue}
         timesArray={timesArray}
       />
-    </>
+    </section>
   );
 }

@@ -57,6 +57,7 @@ export default function GameEndAlert({
         ) / 100
       : 0;
 
+
   const questionsSkipped = gameWordsData.reduce(
     (total, x) => (!x.isCorrect ? total + 1 : total),
     0
@@ -93,7 +94,7 @@ export default function GameEndAlert({
                 >
                   <h1>Avg Time</h1>
                   <p className="text-2xl">
-                    {questionsSkipped && correctAnswers ? avgResponseTime : 0}s
+                    {!questionsSkipped && correctAnswers ? avgResponseTime : 0}s
                   </p>
                 </div>
                 <div
