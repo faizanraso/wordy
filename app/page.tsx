@@ -10,6 +10,7 @@ import Timer from "@/components/timer";
 export default function Home() {
   const [gameWordsData, setGameWordsData] = useState<
     {
+      level_id: string;
       definition: string;
       possibleAnswers: string[];
       userAnswer: string;

@@ -20,6 +20,7 @@ interface GameEndAlertProps {
   open: boolean;
   setOpen: any;
   gameWordsData: {
+    level_id: string;
     definition: string;
     possibleAnswers: string[];
     userAnswer: string;
@@ -122,7 +123,7 @@ export default function GameEndAlert({
                           <ul>
                             {gameWordsData.map((wordData) =>
                               wordData.isCorrect ? (
-                                <li>
+                                <li key={wordData.level_id}>
                                   <Popover key={wordData.userAnswer}>
                                     <PopoverTrigger asChild>
                                       <button className="font-medium text-green-700 p-0.5">
@@ -149,7 +150,7 @@ export default function GameEndAlert({
                           <ul>
                             {gameWordsData.map((wordData) =>
                               !wordData.isCorrect ? (
-                                <li>
+                                <li key={wordData.level_id}>
                                   <Popover key={wordData.possibleAnswers[0]}>
                                     <PopoverTrigger asChild>
                                       <button className="font-medium text-red-700 p-0.5">

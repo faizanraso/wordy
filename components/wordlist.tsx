@@ -3,6 +3,7 @@ import React from "react";
 
 interface WordListProps {
   gameWordsData: {
+    level_id: string;
     definition: string;
     possibleAnswers: string[];
     userAnswer: string;

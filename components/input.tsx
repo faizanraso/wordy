@@ -1,18 +1,18 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import useSWR from "swr";
 
 import { fetcher } from "@/app/utils/fetcher";
 import GameEndAlert from "./modals/gameEnd";
-import { playCorrectSound, playErrorSound } from "@/app/utils/play-sounds";
 import { toTitleCase } from "@/app/utils/title-case";
 import shuffleArray from "@/app/utils/shuffle-array";
 import gameStartNotification from "@/app/utils/game-start-notif";
 
 interface InputProps {
   gameWordsData: {
+    level_id: string;
     definition: string;
     possibleAnswers: string[];
     userAnswer: string;
