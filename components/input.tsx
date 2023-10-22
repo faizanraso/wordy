@@ -58,7 +58,10 @@ export default function Input({
 
   useEffect(() => {
     if (gameEnded && inputRef.current) {
-      setTimesArray([...timesArray, Date.now() - startTime]);
+      // indicates the user was trying to solve the last question
+      if (Date.now() - startTime >= 5000) {
+        setTimesArray([...timesArray, Date.now() - startTime]);
+      }
       setStartTime(0);
       inputRef.current.blur();
     }

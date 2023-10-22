@@ -55,6 +55,11 @@ export default function GameEndAlert({
       ) / 100
     : 0;
 
+  const questionsSkipped = gameWordsData.reduce(
+    (total, x) => (!x.isCorrect ? total + 1 : total),
+    0
+  );
+
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
@@ -86,8 +91,18 @@ export default function GameEndAlert({
                 <h1>Avg Response Time</h1>
                 <p className="text-2xl">{avgResponseTime}</p>
               </div>
-              <div>
+              <div
+                className={cn(
+                  "flex flex-col font-semibold justify-center items-center gap-y-3",
+                  questionsSkipped === 0
+                    ? "text-green-700"
+                    : questionsSkipped < 4
+                    ? "text-yellow-600"
+                    : "text-red-600"
+                )}
+              >
                 <h1>Skipped Words</h1>
+                <p className="text-2xl">{questionsSkipped}</p>
               </div>
             </div>
 
