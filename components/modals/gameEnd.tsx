@@ -57,8 +57,6 @@ export default function GameEndAlert({
         ) / 100
       : 0;
 
-  console.log(timesArray);
-
   const questionsSkipped = gameWordsData.reduce(
     (total, x) => (!x.isCorrect ? total + 1 : total),
     0
@@ -118,41 +116,35 @@ export default function GameEndAlert({
                     {gameWordsData
                       ? gameWordsData.map((wordData) =>
                           wordData.isCorrect ? (
-                            <div className="" key={wordData.userAnswer}>
-                              <Popover>
-                                <PopoverTrigger asChild>
-                                  <button className="font-medium text-green-700 p-0.5">
-                                    {wordData.userAnswer}
-                                  </button>
-                                </PopoverTrigger>
-                                <PopoverContent side="top" className="text-xs">
-                                  <Arrow className="fill-white" />
-                                  <div>{wordData.definition}</div>
-                                </PopoverContent>
-                              </Popover>
-                            </div>
+                            <Popover key={wordData.userAnswer}>
+                              <PopoverTrigger asChild>
+                                <button className="font-medium text-green-700 p-0.5">
+                                  {wordData.userAnswer}
+                                </button>
+                              </PopoverTrigger>
+                              <PopoverContent side="top" className="text-xs">
+                                <Arrow className="fill-white" />
+                                <div>{wordData.definition}</div>
+                              </PopoverContent>
+                            </Popover>
                           ) : (
-                            <div className="" key={wordData.possibleAnswers[0]}>
-                              <Popover>
-                                <PopoverTrigger asChild>
-                                  <button className="font-medium text-red-700 p-0.5">
-                                    {" "}
-                                    {wordData.possibleAnswers[0].length <= 3 &&
-                                    wordData.possibleAnswers.includes(
-                                      wordData.possibleAnswers[0].toUpperCase()
-                                    )
-                                      ? wordData.possibleAnswers[0].toUpperCase()
-                                      : toTitleCase(
-                                          wordData.possibleAnswers[0]
-                                        )}
-                                  </button>
-                                </PopoverTrigger>
-                                <PopoverContent side="top" className="text-xs">
-                                  <Arrow className="fill-white" />
-                                  <div>{wordData.definition}</div>
-                                </PopoverContent>
-                              </Popover>
-                            </div>
+                            <Popover key={wordData.possibleAnswers[0]}>
+                              <PopoverTrigger asChild>
+                                <button className="font-medium text-red-700 p-0.5">
+                                  {" "}
+                                  {wordData.possibleAnswers[0].length <= 3 &&
+                                  wordData.possibleAnswers.includes(
+                                    wordData.possibleAnswers[0].toUpperCase()
+                                  )
+                                    ? wordData.possibleAnswers[0].toUpperCase()
+                                    : toTitleCase(wordData.possibleAnswers[0])}
+                                </button>
+                              </PopoverTrigger>
+                              <PopoverContent side="top" className="text-xs">
+                                <Arrow className="fill-white" />
+                                <div>{wordData.definition}</div>
+                              </PopoverContent>
+                            </Popover>
                           )
                         )
                       : null}

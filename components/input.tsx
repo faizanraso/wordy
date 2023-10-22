@@ -46,8 +46,8 @@ export default function Input({
   const [timesArray, setTimesArray] = useState<number[]>([]);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const correctRef = useRef<HTMLAudioElement>(null);
-  const errorRef = useRef<HTMLAudioElement>(null);
+  // const correctRef = useRef<HTMLAudioElement>(null);
+  // const errorRef = useRef<HTMLAudioElement>(null);
   let reset: NodeJS.Timeout | undefined;
 
   const { data, error, isLoading } = useSWR("/api/getLevel", fetcher);
@@ -102,7 +102,7 @@ export default function Input({
     } else if (
       currentWord?.possibleAnswers.includes(inputValue.toLowerCase())
     ) {
-      playCorrectSound(correctRef);
+      // playCorrectSound(correctRef);
       setIsSuccess(true);
       setTimesArray([...timesArray, Date.now() - startTime]);
       setStartTime(Date.now());
@@ -122,7 +122,7 @@ export default function Input({
       setCurrentWordIndex(currentWordIndex + 1);
       setInputValue("");
     } else {
-      playErrorSound(errorRef);
+      // playErrorSound(errorRef);
       setShakeEffect(true);
       setIsFailed(true);
     }
@@ -151,6 +151,8 @@ export default function Input({
   return (
     <>
       <div className="items-center justify-center text-center py-5 w-[350px]">
+      <div className="">
+      </div>
         {isStarted ? (
           <div className="">
             <p className="text-sm font-medium">
@@ -201,7 +203,7 @@ export default function Input({
           </div>
           <div className="flex items-center justify-center pt-3 gap-x-3">
             <button
-              className="shadow-inner py-2.5 px-8 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:opacity-40 items-center justify-center"
+              className="shadow-inner py-2.5 px-10 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:opacity-40 items-center justify-center"
               type="submit"
             >
               Submit
