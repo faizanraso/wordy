@@ -97,6 +97,7 @@ export default function Input({
     if (!isStarted && inputValue.toLowerCase() == "ready") {
       setInputValue("");
       setStartTime(Date.now());
+      setTimesArray([]);
       setIsStarted(true);
     } else if (
       currentWord?.possibleAnswers.includes(inputValue.toLowerCase())
