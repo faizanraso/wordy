@@ -3,6 +3,7 @@ import React from "react";
 
 interface WordListProps {
   gameWordsData: {
+    level_id: string;
     definition: string;
     possibleAnswers: string[];
     userAnswer: string;
@@ -16,14 +17,14 @@ export default function WordList({ gameWordsData, gameEnded }: WordListProps) {
     <section>
       <div className="w-[350px] bg-gray-100 rounded-md text-center py-3">
         <div className="">
-          <h1 className="font-semibold">Correct Answers</h1>
+          <h1 className="font-semibold">Answers</h1>
         </div>
         <div className="pt-3 space-y-1 px-2">
           {!gameWordsData.length ? (
             <div className="">
               {!gameEnded ? (
                 <p className="text-xs font-medium">
-                  Answers you guess correctly will show up here in{" "}
+                  Words you guess correctly will show up here in{" "}
                   <span className="text-green-700 font-semibold">green</span>,{" "}
                   while skipped ones will show up in{" "}
                   <span className="text-red-700 font-semibold">red</span>

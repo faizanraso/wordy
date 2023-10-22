@@ -1,18 +1,18 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import useSWR from "swr";
 
 import { fetcher } from "@/app/utils/fetcher";
 import GameEndAlert from "./modals/gameEnd";
-import { playCorrectSound, playErrorSound } from "@/app/utils/play-sounds";
 import { toTitleCase } from "@/app/utils/title-case";
 import shuffleArray from "@/app/utils/shuffle-array";
 import gameStartNotification from "@/app/utils/game-start-notif";
 
 interface InputProps {
   gameWordsData: {
+    level_id: string;
     definition: string;
     possibleAnswers: string[];
     userAnswer: string;
@@ -42,9 +42,12 @@ export default function Input({
   const [currentWord, setCurrentWord] = useState<any>();
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
 
+  const [startTime, setStartTime] = useState<number>(0);
+  const [timesArray, setTimesArray] = useState<number[]>([]);
+
   const inputRef = useRef<HTMLInputElement>(null);
-  const correctRef = useRef<HTMLAudioElement>(null);
-  const errorRef = useRef<HTMLAudioElement>(null);
+  // const correctRef = useRef<HTMLAudioElement>(null);
+  // const errorRef = useRef<HTMLAudioElement>(null);
   let reset: NodeJS.Timeout | undefined;
 
   const { data, error, isLoading } = useSWR("/api/getLevel", fetcher);
@@ -54,7 +57,14 @@ export default function Input({
   }, [data]);
 
   useEffect(() => {
-    if (gameEnded && inputRef.current) inputRef.current.blur();
+    if (gameEnded && inputRef.current) {
+      // indicates the user was trying to solve the last question
+      if (Date.now() - startTime >= 5000) {
+        setTimesArray([...timesArray, Date.now() - startTime]);
+      }
+      setStartTime(0);
+      inputRef.current.blur();
+    }
   }, [gameEnded]);
 
   useEffect(() => {
@@ -86,12 +96,16 @@ export default function Input({
 
     if (!isStarted && inputValue.toLowerCase() == "ready") {
       setInputValue("");
+      setStartTime(Date.now());
+      setTimesArray([]);
       setIsStarted(true);
     } else if (
       currentWord?.possibleAnswers.includes(inputValue.toLowerCase())
     ) {
-      playCorrectSound(correctRef);
+      // playCorrectSound(correctRef);
       setIsSuccess(true);
+      setTimesArray([...timesArray, Date.now() - startTime]);
+      setStartTime(Date.now());
       setGameWordsData([
         {
           ...currentWord,
@@ -104,12 +118,11 @@ export default function Input({
         },
         ...gameWordsData,
       ]);
-
       if (allWords) setCurrentWord(allWords[currentWordIndex + 1]);
       setCurrentWordIndex(currentWordIndex + 1);
       setInputValue("");
     } else {
-      playErrorSound(errorRef);
+      // playErrorSound(errorRef);
       setShakeEffect(true);
       setIsFailed(true);
     }
@@ -131,25 +144,26 @@ export default function Input({
       setCurrentWord(allWords[currentWordIndex + 1]);
       setCurrentWordIndex(currentWordIndex + 1);
       setInputValue("");
+      setStartTime(Date.now());
     }
   }
 
   return (
-    <>
-      <div className="items-center justify-center text-center py-5 w-[350px]">
-        {isStarted ? (
-          <div className="">
+    <section>
+      <div className="items-center justify-center text-center pt-3 pb-5 w-[350px]">
+        <div className="flex text-center justify-center items-center min-h-[80px]">
+          {isStarted ? (
             <p className="text-sm font-medium">
               {" "}
               <span className="font-semibold">Definition:</span>{" "}
               {currentWord?.definition}
             </p>
-          </div>
-        ) : (
-          <p className="font-semibold tracking-wide">
-            Type &quot;READY&quot; to Start
-          </p>
-        )}
+          ) : (
+            <p className="font-semibold tracking-wide text-xl">
+              Type &quot;READY&quot; to Start
+            </p>
+          )}
+        </div>
       </div>
       <div className="mb-3 relative">
         <form onSubmit={checkAnswer} noValidate>
@@ -187,7 +201,7 @@ export default function Input({
           </div>
           <div className="flex items-center justify-center pt-3 gap-x-3">
             <button
-              className="shadow-inner py-2.5 px-8 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:opacity-40 items-center justify-center"
+              className="shadow-inner py-2.5 px-10 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:opacity-40 items-center justify-center"
               type="submit"
             >
               Submit
@@ -246,7 +260,8 @@ export default function Input({
         gameWordsData={gameWordsData}
         setGameWordsData={setGameWordsData}
         setInputValue={setInputValue}
+        timesArray={timesArray}
       />
-    </>
+    </section>
   );
 }
