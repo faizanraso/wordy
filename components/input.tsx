@@ -9,6 +9,12 @@ import GameEndAlert from "./modals/gameEnd";
 import { toTitleCase } from "@/app/utils/title-case";
 import shuffleArray from "@/app/utils/shuffle-array";
 import gameStartNotification from "@/app/utils/game-start-notif";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Arrow } from "@radix-ui/react-popover";
 
 interface InputProps {
   gameWordsData: {
@@ -150,6 +156,20 @@ export default function Input({
 
   return (
     <section>
+      {/* <Popover>
+        <PopoverTrigger asChild>
+          <button className="font-medium text-red-700 p-0.5">Test</button>
+        </PopoverTrigger>
+        <PopoverContent
+          side="top"
+          className="text-xs rounded-lg p-5 w-[260px] bg-white shadow-lg"
+          sideOffset={5}
+        >
+          <div>Test 2</div>
+          <Arrow className="fill-white" />
+        </PopoverContent>
+      </Popover> */}
+
       <div className="items-center justify-center text-center pt-3 pb-5 w-[350px]">
         <div className="flex text-center justify-center items-center min-h-[80px]">
           {isStarted ? (
