@@ -68,8 +68,13 @@ export default function Input({
       if (Date.now() - startTime >= 5000) {
         setTimesArray([...timesArray, Date.now() - startTime]);
       }
+
       setStartTime(0);
       inputRef.current.blur();
+    }
+
+    if (gameEnded) {
+      setInputValue("");
     }
   }, [gameEnded]);
 
@@ -84,11 +89,6 @@ export default function Input({
     }
   }, [isStarted, allWords]);
 
-  useEffect(() => {
-    if (gameEnded) {
-      setInputValue("");
-    }
-  }, [gameEnded]);
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
