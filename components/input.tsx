@@ -68,8 +68,13 @@ export default function Input({
       if (Date.now() - startTime >= 5000) {
         setTimesArray([...timesArray, Date.now() - startTime]);
       }
+
       setStartTime(0);
       inputRef.current.blur();
+    }
+
+    if (gameEnded) {
+      setInputValue("");
     }
   }, [gameEnded]);
 
@@ -84,11 +89,6 @@ export default function Input({
     }
   }, [isStarted, allWords]);
 
-  useEffect(() => {
-    if (gameEnded) {
-      setInputValue("");
-    }
-  }, [gameEnded]);
 
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -152,6 +152,11 @@ export default function Input({
       setInputValue("");
       setStartTime(Date.now());
     }
+  }
+
+  function clearInput() {
+    setInputValue("");
+    inputRef.current?.focus();
   }
 
   return (
@@ -218,6 +223,31 @@ export default function Input({
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
             />
+            <div className="absolute top-2 right-2">
+              <button
+                className="flex rounded-full mt-2 py-1 px-1 hover:bg-gray-100 items-center justify-center focus:bg-gray-200"
+                onClick={clearInput}
+                type="reset"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24px"
+                  height="24px"
+                  fill="none"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                  color="#000000"
+                >
+                  <path
+                    stroke="#000000"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9.172 14.828 12.001 12m2.828-2.828L12.001 12m0 0L9.172 9.172M12.001 12l2.828 2.828M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
           </div>
           <div className="flex items-center justify-center pt-3 gap-x-3">
             <button
