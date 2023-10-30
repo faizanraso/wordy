@@ -14,7 +14,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
         where: { email: session?.user?.email },
       });
 
-      const newGamesPlayed: number = userInfo?.gamesPlayed
+    //   const newGamesPlayed: number = 
+
+      const newUserGamesPlayed: number = userInfo?.gamesPlayed
         ? userInfo.gamesPlayed + 1
         : 1;
 
@@ -27,6 +29,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
           ? userScore
           : userInfo.highScore
         : userInfo?.highScore;
+
+      
 
       //   const userUpdate = await prisma.user.update({
       //     where: {
@@ -43,6 +47,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       //           : userInfo?.highScore,
       //     },
       //   });
+      
       return NextResponse.json({ message: "Complete" });
     }
     return NextResponse.json({ message: "User not signed in" });
