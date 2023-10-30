@@ -63,6 +63,13 @@ export default function Input({
 
       // post req for game complete
 
+      const body ={}
+      const requestOptions = {
+        method: "POST",
+        headers: {"Content-Type": "application/json"}
+        data: JSON.stringify(body)
+      }
+
       setStartTime(0);
       inputRef.current.blur();
     }
@@ -273,6 +280,7 @@ export default function Input({
         setGameWordsData={setGameWordsData}
         setInputValue={setInputValue}
         timesArray={timesArray}
+        gameEnded={gameEnded}
       />
     </section>
   );

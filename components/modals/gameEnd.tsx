@@ -15,6 +15,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Arrow } from "@radix-ui/react-popover";
+import { useEffect, useState } from "react";
 
 interface GameEndAlertProps {
   open: boolean;
@@ -29,6 +30,7 @@ interface GameEndAlertProps {
   setGameWordsData: any;
   timesArray: number[];
   setInputValue: (arg0: string) => void;
+  gameEnded: boolean;
 }
 
 export default function GameEndAlert({
@@ -38,30 +40,47 @@ export default function GameEndAlert({
   setGameWordsData,
   setInputValue,
   timesArray,
+  gameEnded,
 }: GameEndAlertProps) {
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [avgResponseTime, setAvgResponseTime] = useState(0);
+  const [questionsSkipped, setQuestionsSkipped] = useState(0);
+
+  useEffect(() => {
+    if (gameEnded) {
+      setCorrectAnswers(
+        gameWordsData.reduce(
+          (total, x) => (x.isCorrect === true ? total + 1 : total),
+          0
+        )
+      );
+      setAvgResponseTime(
+        timesArray.length > 1
+          ? Math.round(
+              (100 * timesArray.reduce((totalTime, x) => totalTime + x, 0)) /
+                timesArray.length /
+                1000
+            ) / 100
+          : 0
+      );
+
+      setQuestionsSkipped(
+        gameWordsData.reduce(
+          (total, x) => (!x.isCorrect ? total + 1 : total),
+          0
+        )
+      );
+    } else {
+      setCorrectAnswers(0);
+      setAvgResponseTime(0);
+      setQuestionsSkipped(0);
+    }
+  }, [gameEnded]);
+
   function resetGame() {
     setGameWordsData([]);
     setInputValue("");
   }
-
-  const correctAnswers = gameWordsData.reduce(
-    (total, x) => (x.isCorrect === true ? total + 1 : total),
-    0
-  );
-
-  const avgResponseTime =
-    timesArray.length > 1
-      ? Math.round(
-          (100 * timesArray.reduce((totalTime, x) => totalTime + x, 0)) /
-            timesArray.length /
-            1000
-        ) / 100
-      : 0;
-
-  const questionsSkipped = gameWordsData.reduce(
-    (total, x) => (!x.isCorrect ? total + 1 : total),
-    0
-  );
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
