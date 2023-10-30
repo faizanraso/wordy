@@ -34,16 +34,18 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  role          String?   @default("player")
-  name          String?
-  email         String?   @unique
-  highScore     Int?
-  gamesPlayed   Int?
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id              String    @id @default(cuid())
+  role            String?   @default("player")
+  name            String?
+  email           String?   @unique
+  highScore       Int?      @default(0)
+  gamesPlayed     Int?      @default(0)
+  avgScore        Int?      @default(0)
+  avgResponseTime Float     @default(0.00)
+  emailVerified   DateTime?
+  image           String?
+  accounts        Account[]
+  sessions        Session[]
 }
 
 model VerificationToken {

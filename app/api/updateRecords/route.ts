@@ -6,19 +6,26 @@ import { authOptions } from "../auth/[...nextauth]/route";
 export async function POST(req: NextRequest, res: NextResponse) {
   const session = await getServerSession(authOptions);
   const body = await req.json();
-  const { username, school, program } = body;
+  const { userScore } = body;
 
   try {
     if (session) {
       const userInfo = await prisma.user.findFirst({
         where: { email: session?.user?.email },
       });
-      
+
       const userUpdate = await prisma.user.update({
         where: {
           email: session?.user?.email!,
         },
-        data: {},
+        data: {
+          highScore:
+            userInfo?.highScore !== null &&
+            userInfo?.highScore !== undefined &&
+            userScore > userInfo?.highScore
+              ? userScore
+              : userInfo?.highScore,
+        },
       });
       return NextResponse.json({ message: "Complete" });
     }
