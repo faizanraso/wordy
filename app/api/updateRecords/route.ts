@@ -6,7 +6,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 export async function POST(req: NextRequest, res: NextResponse) {
   const session = await getServerSession(authOptions);
   const body = await req.json();
-  const { userScore } = body;
+  const { userScore, avgResponseTime } = body;
 
   try {
     if (session) {
@@ -14,19 +14,35 @@ export async function POST(req: NextRequest, res: NextResponse) {
         where: { email: session?.user?.email },
       });
 
-      const userUpdate = await prisma.user.update({
-        where: {
-          email: session?.user?.email!,
-        },
-        data: {
-          highScore:
-            userInfo?.highScore !== null &&
-            userInfo?.highScore !== undefined &&
-            userScore > userInfo?.highScore
-              ? userScore
-              : userInfo?.highScore,
-        },
-      });
+      const newGamesPlayed: number = userInfo?.gamesPlayed
+        ? userInfo.gamesPlayed + 1
+        : 1;
+
+      const newAvgResponseTime: number = userInfo?.avgResponseTime
+        ? (userInfo.avgResponseTime + avgResponseTime) / 2
+        : avgResponseTime;
+
+      const newHighScore: number = userInfo?.highScore
+        ? userScore > userInfo.highScore
+          ? userScore
+          : userInfo.highScore
+        : userInfo?.highScore;
+
+      //   const userUpdate = await prisma.user.update({
+      //     where: {
+      //       email: session?.user?.email!,
+      //     },
+      //     data: {
+
+      //       avgResponseTime: userInfo?.avgResponseTime
+      //       highScore:
+      //         userInfo?.highScore !== null &&
+      //         userInfo?.highScore !== undefined &&
+      //         userScore > userInfo?.highScore
+      //           ? userScore
+      //           : userInfo?.highScore,
+      //     },
+      //   });
       return NextResponse.json({ message: "Complete" });
     }
     return NextResponse.json({ message: "User not signed in" });
