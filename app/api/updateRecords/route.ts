@@ -14,8 +14,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
         where: { email: session?.user?.email },
       });
 
-    //   const newGamesPlayed: number = 
-
       const newUserGamesPlayed: number = userInfo?.gamesPlayed
         ? userInfo.gamesPlayed + 1
         : 1;
@@ -30,26 +28,24 @@ export async function POST(req: NextRequest, res: NextResponse) {
           : userInfo.highScore
         : userInfo?.highScore;
 
-      
+      const userUpdate = await prisma.user.update({
+        where: {
+          email: session?.user?.email!,
+        },
+        data: {
+          gamesPlayed: newUserGamesPlayed,
+          avgResponseTime: newAvgResponseTime,
+          highScore: newHighScore,
+        },
+      });
 
-      //   const userUpdate = await prisma.user.update({
-      //     where: {
-      //       email: session?.user?.email!,
-      //     },
-      //     data: {
+      if (userInfo?.role !== "admin") {
+        const addGameRecord = await prisma.totalGames.create({});
+      }
 
-      //       avgResponseTime: userInfo?.avgResponseTime
-      //       highScore:
-      //         userInfo?.highScore !== null &&
-      //         userInfo?.highScore !== undefined &&
-      //         userScore > userInfo?.highScore
-      //           ? userScore
-      //           : userInfo?.highScore,
-      //     },
-      //   });
-      
       return NextResponse.json({ message: "Complete" });
     }
+
     return NextResponse.json({ message: "User not signed in" });
   } catch (e) {
     console.log(e);
