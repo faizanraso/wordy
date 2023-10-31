@@ -71,12 +71,16 @@ export default function GameEndAlert({
       0
     );
 
+    // avg response sends to server, but does not get displayed in the modal
+    
     const userAvgResponseTime =
       Math.round(
         (100 * timesArray.reduce((totalTime, x) => totalTime + x, 0)) /
           timesArray.length /
           1000
       ) / 100;
+
+    console.log(userAvgResponseTime);
 
     const userQuestionsSkipped = gameWordsData.reduce(
       (total, x) => (!x.isCorrect ? total + 1 : total),
@@ -87,10 +91,11 @@ export default function GameEndAlert({
     setAvgResponseTime(userAvgResponseTime);
     setQuestionsSkipped(userQuestionsSkipped);
 
-    if (gameEnded) {
+    if (gameEnded && timesArray.length) {
       updateUserData(userCorrectAnswer, userAvgResponseTime);
     }
-  }, [gameEnded]);
+
+  }, [gameEnded, timesArray]);
 
   function resetGame() {
     setGameWordsData([]);

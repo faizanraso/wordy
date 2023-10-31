@@ -61,7 +61,6 @@ export default function Input({
         setTimesArray([...timesArray, Date.now() - startTime]);
       }
 
-      
       setStartTime(0);
       inputRef.current.blur();
     }
