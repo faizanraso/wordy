@@ -38,9 +38,9 @@ model User {
   role            String?   @default("player")
   name            String?
   email           String?   @unique
-  highScore       Int?      @default(0)
-  gamesPlayed     Int?      @default(0)
-  avgScore        Int?      @default(0)
+  highScore       Int       @default(0)
+  gamesPlayed     Int       @default(0)
+  avgScore        Float     @default(0.00)
   avgResponseTime Float     @default(0.00)
   emailVerified   DateTime?
   image           String?

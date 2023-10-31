@@ -16,10 +16,12 @@ export function updateUserAvgResponseTime(
   gameAvgResponseTime: number
 ) {
   if (!currentAvgResponseTime) return gameAvgResponseTime;
-  return (currentAvgResponseTime + gameAvgResponseTime) / 2;
+  return (
+    Math.round((100 * (currentAvgResponseTime + gameAvgResponseTime)) / 2) / 100
+  );
 }
 
 export function updateAvgScore(currentAvgScore: number, gameScore: number) {
   if (!currentAvgScore) return gameScore;
-  return (currentAvgScore + gameScore) / 2;
+  return Math.round((100 * (currentAvgScore + gameScore)) / 2) / 100;
 }

@@ -2,6 +2,12 @@ import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
+import {
+  updateAvgScore,
+  updateUserAvgResponseTime,
+  updateUserGamesPlayed,
+  updateUserHighScore,
+} from "@/app/utils/game-end";
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -14,23 +20,23 @@ export async function POST(req: NextRequest) {
         where: { email: session?.user?.email },
       });
 
-      const newUserGamesPlayed: number = userInfo?.gamesPlayed
-        ? userInfo.gamesPlayed + 1
-        : 1;
+      const newUserGamesPlayed: number = updateUserGamesPlayed(
+        userInfo?.gamesPlayed!
+      );
 
-      const newHighScore: number =
-        userInfo?.highScore && userScore > userInfo.highScore
-          ? userScore
-          : userInfo?.highScore;
+      const newHighScore: number = updateUserHighScore(
+        userInfo?.highScore!,
+        userScore
+      );
 
-      const newavgResponse: number = userInfo?.avgResponseTime
-        ? (userInfo.avgResponseTime + avgResponse) / 2
-        : avgResponse;
-
-      const newAvgScore: number =
-        newUserGamesPlayed >= 1
-          ? (userScore + userInfo?.avgScore) / 2
-          : userScore;
+      const newavgResponse: number = updateUserAvgResponseTime(
+        userInfo?.avgResponseTime!,
+        avgResponse
+      );
+      const newAvgScore: number = updateAvgScore(
+        userInfo?.avgScore!,
+        userScore
+      );
 
       const userUpdate = await prisma.user.update({
         where: {
