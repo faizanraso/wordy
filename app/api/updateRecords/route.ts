@@ -3,12 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   const body = await req.json();
   const { userScore, avgResponseTime } = body;
-
-  console.log(userScore, avgResponseTime);
 
   try {
     if (session) {

@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { toTitleCase } from "@/app/utils/title-case";
 import { cn } from "@/lib/utils";
 import {
@@ -15,7 +18,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Arrow } from "@radix-ui/react-popover";
-import { useEffect, useState } from "react";
 
 interface GameEndAlertProps {
   open: boolean;
@@ -42,18 +44,15 @@ export default function GameEndAlert({
   timesArray,
   gameEnded,
 }: GameEndAlertProps) {
-  const [correctAnswers, setCorrectAnswers] = useState(0);
-  const [avgResponseTime, setAvgResponseTime] = useState(0);
-  const [questionsSkipped, setQuestionsSkipped] = useState(0);
+  const [correctAnswers, setCorrectAnswers] = useState<number>(0);
+  const [avgResponseTime, setAvgResponseTime] = useState<number>(0);
+  const [questionsSkipped, setQuestionsSkipped] = useState<number>(0);
 
   useEffect(() => {
-    async function updateUserData(
-      userCorrectAnswer: number,
-      userAvgResponseTime: number
-    ) {
+    async function updateUserData(userScore: number, avgResponse: number) {
       const body = {
-        userCorrectAnswer,
-        userAvgResponseTime,
+        userScore,
+        avgResponseTime,
       };
 
       const requestOptions = {
@@ -62,36 +61,36 @@ export default function GameEndAlert({
         body: JSON.stringify(body),
       };
 
+      console.log(JSON.stringify(body));
+
       const response = await fetch("/api/updateRecords", requestOptions);
+
+      if (!response.ok) console.log("error");
     }
 
+    const userCorrectAnswer = gameWordsData.reduce(
+      (total, x) => (x.isCorrect === true ? total + 1 : total),
+      0
+    );
+
+    const userAvgResponseTime =
+      Math.round(
+        (100 * timesArray.reduce((totalTime, x) => totalTime + x, 0)) /
+          timesArray.length /
+          1000
+      ) / 100;
+
+    const userQuestionsSkipped = gameWordsData.reduce(
+      (total, x) => (!x.isCorrect ? total + 1 : total),
+      0
+    );
+
+    setCorrectAnswers(userCorrectAnswer);
+    setAvgResponseTime(userAvgResponseTime);
+    setQuestionsSkipped(userQuestionsSkipped);
+
     if (gameEnded) {
-      const userCorrectAnswer = gameWordsData.reduce(
-        (total, x) => (x.isCorrect === true ? total + 1 : total),
-        0
-      );
-
-      const userAvgResponseTime =
-        Math.round(
-          (100 * timesArray.reduce((totalTime, x) => totalTime + x, 0)) /
-            timesArray.length /
-            1000
-        ) / 100;
-
-      const userQuestionsSkipped = gameWordsData.reduce(
-        (total, x) => (!x.isCorrect ? total + 1 : total),
-        0
-      );
-
-      setCorrectAnswers(userCorrectAnswer);
-      setAvgResponseTime(userAvgResponseTime);
-      setQuestionsSkipped(userQuestionsSkipped);
-
       updateUserData(userCorrectAnswer, userAvgResponseTime);
-    } else {
-      setCorrectAnswers(0);
-      setAvgResponseTime(0);
-      setQuestionsSkipped(0);
     }
   }, [gameEnded]);
 
