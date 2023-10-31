@@ -52,7 +52,7 @@ export default function GameEndAlert({
     async function updateUserData(userScore: number, avgResponse: number) {
       const body = {
         userScore,
-        avgResponseTime,
+        avgResponse,
       };
 
       const requestOptions = {
@@ -60,8 +60,6 @@ export default function GameEndAlert({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       };
-
-      console.log(JSON.stringify(body));
 
       const response = await fetch("/api/updateRecords", requestOptions);
 

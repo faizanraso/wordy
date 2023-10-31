@@ -6,7 +6,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   const body = await req.json();
-  const { userScore, avgResponseTime } = body;
+  const { userScore, avgResponse } = body;
 
   try {
     if (session) {
@@ -23,9 +23,9 @@ export async function POST(req: NextRequest) {
           ? userScore
           : userInfo?.highScore;
 
-      const newAvgResponseTime: number = userInfo?.avgResponseTime
-        ? (userInfo.avgResponseTime + avgResponseTime) / 2
-        : avgResponseTime;
+      const newavgResponse: number = userInfo?.avgResponseTime
+        ? (userInfo.avgResponseTime + avgResponse) / 2
+        : avgResponse;
 
       const newAvgScore: number =
         newUserGamesPlayed >= 1
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
         data: {
           gamesPlayed: newUserGamesPlayed,
           highScore: newHighScore,
-          avgResponseTime: newAvgResponseTime,
+          avgResponseTime: newavgResponse,
           avgScore: newAvgScore,
         },
       });
@@ -52,7 +52,6 @@ export async function POST(req: NextRequest) {
     }
 
     const addGameRecord = await prisma.totalGames.create({});
-
     return NextResponse.json({ message: "User not signed in" });
   } catch (e) {
     console.log(e);
