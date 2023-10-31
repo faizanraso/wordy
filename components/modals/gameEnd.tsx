@@ -47,29 +47,47 @@ export default function GameEndAlert({
   const [questionsSkipped, setQuestionsSkipped] = useState(0);
 
   useEffect(() => {
+    async function updateUserData(
+      userCorrectAnswer: number,
+      userAvgResponseTime: number
+    ) {
+      const body = {
+        userCorrectAnswer,
+        userAvgResponseTime,
+      };
+
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      };
+
+      const response = await fetch("/api/updateRecords", requestOptions);
+    }
+
     if (gameEnded) {
-      setCorrectAnswers(
-        gameWordsData.reduce(
-          (total, x) => (x.isCorrect === true ? total + 1 : total),
-          0
-        )
-      );
-      setAvgResponseTime(
-        timesArray.length > 1
-          ? Math.round(
-              (100 * timesArray.reduce((totalTime, x) => totalTime + x, 0)) /
-                timesArray.length /
-                1000
-            ) / 100
-          : 0
+      const userCorrectAnswer = gameWordsData.reduce(
+        (total, x) => (x.isCorrect === true ? total + 1 : total),
+        0
       );
 
-      setQuestionsSkipped(
-        gameWordsData.reduce(
-          (total, x) => (!x.isCorrect ? total + 1 : total),
-          0
-        )
+      const userAvgResponseTime =
+        Math.round(
+          (100 * timesArray.reduce((totalTime, x) => totalTime + x, 0)) /
+            timesArray.length /
+            1000
+        ) / 100;
+
+      const userQuestionsSkipped = gameWordsData.reduce(
+        (total, x) => (!x.isCorrect ? total + 1 : total),
+        0
       );
+
+      setCorrectAnswers(userCorrectAnswer);
+      setAvgResponseTime(userAvgResponseTime);
+      setQuestionsSkipped(userQuestionsSkipped);
+
+      updateUserData(userCorrectAnswer, userAvgResponseTime);
     } else {
       setCorrectAnswers(0);
       setAvgResponseTime(0);

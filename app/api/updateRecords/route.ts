@@ -8,6 +8,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const body = await req.json();
   const { userScore, avgResponseTime } = body;
 
+  console.log(userScore, avgResponseTime);
+
   try {
     if (session) {
       const userInfo = await prisma.user.findFirst({
@@ -18,15 +20,19 @@ export async function POST(req: NextRequest, res: NextResponse) {
         ? userInfo.gamesPlayed + 1
         : 1;
 
+      const newHighScore: number =
+        userInfo?.highScore && userScore > userInfo.highScore
+          ? userScore
+          : userInfo?.highScore;
+
       const newAvgResponseTime: number = userInfo?.avgResponseTime
         ? (userInfo.avgResponseTime + avgResponseTime) / 2
         : avgResponseTime;
 
-      const newHighScore: number = userInfo?.highScore
-        ? userScore > userInfo.highScore
-          ? userScore
-          : userInfo.highScore
-        : userInfo?.highScore;
+      const newAvgScore: number =
+        newUserGamesPlayed >= 1
+          ? (userScore + userInfo?.avgScore) / 2
+          : userScore;
 
       const userUpdate = await prisma.user.update({
         where: {
@@ -34,8 +40,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
         },
         data: {
           gamesPlayed: newUserGamesPlayed,
-          avgResponseTime: newAvgResponseTime,
           highScore: newHighScore,
+          avgResponseTime: newAvgResponseTime,
+          avgScore: newAvgScore,
         },
       });
 
@@ -45,6 +52,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
       return NextResponse.json({ message: "Complete" });
     }
+
+    const addGameRecord = await prisma.totalGames.create({});
 
     return NextResponse.json({ message: "User not signed in" });
   } catch (e) {

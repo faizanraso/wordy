@@ -61,15 +61,7 @@ export default function Input({
         setTimesArray([...timesArray, Date.now() - startTime]);
       }
 
-      // post req for game complete
-
-      const body ={}
-      const requestOptions = {
-        method: "POST",
-        headers: {"Content-Type": "application/json"}
-        data: JSON.stringify(body)
-      }
-
+      
       setStartTime(0);
       inputRef.current.blur();
     }
