@@ -19,7 +19,7 @@ export default function Home() {
   >([]);
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [gameEnded, setGameEnded] = useState<boolean>(false);
-  const [timeRemaining, setTimeRemaining] = useState<number>(8);
+  const [timeRemaining, setTimeRemaining] = useState<number>(45);
 
   return (
     <div className="flex flex-col min-h-screen">

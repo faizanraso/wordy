@@ -125,7 +125,7 @@ export default function GameEndAlert({
                 >
                   <h1 className="font-semibold">Avg Time</h1>
                   <p className="text-2xl font-semibold">
-                    {userCorrectAnswers === 0 ? 0 : userAvgResponseTime}s
+                    {userCorrectAnswers === 0 ? 45 : userAvgResponseTime}s
                   </p>
                 </div>
                 <div
