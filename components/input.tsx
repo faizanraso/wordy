@@ -9,12 +9,6 @@ import GameEndAlert from "./modals/gameEnd";
 import { toTitleCase } from "@/app/utils/title-case";
 import shuffleArray from "@/app/utils/shuffle-array";
 import gameStartNotification from "@/app/utils/game-start-notif";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Arrow } from "@radix-ui/react-popover";
 
 interface InputProps {
   gameWordsData: {
@@ -52,8 +46,6 @@ export default function Input({
   const [timesArray, setTimesArray] = useState<number[]>([]);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  // const correctRef = useRef<HTMLAudioElement>(null);
-  // const errorRef = useRef<HTMLAudioElement>(null);
   let reset: NodeJS.Timeout | undefined;
 
   const { data, error, isLoading } = useSWR("/api/getLevel", fetcher);
@@ -89,7 +81,6 @@ export default function Input({
     }
   }, [isStarted, allWords]);
 
-
   function checkAnswer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -108,7 +99,6 @@ export default function Input({
     } else if (
       currentWord?.possibleAnswers.includes(inputValue.toLowerCase())
     ) {
-      // playCorrectSound(correctRef);
       setIsSuccess(true);
       setTimesArray([...timesArray, Date.now() - startTime]);
       setStartTime(Date.now());
@@ -128,7 +118,6 @@ export default function Input({
       setCurrentWordIndex(currentWordIndex + 1);
       setInputValue("");
     } else {
-      // playErrorSound(errorRef);
       setShakeEffect(true);
       setIsFailed(true);
     }
@@ -161,20 +150,6 @@ export default function Input({
 
   return (
     <section>
-      {/* <Popover>
-        <PopoverTrigger asChild>
-          <button className="font-medium text-red-700 p-0.5">Test</button>
-        </PopoverTrigger>
-        <PopoverContent
-          side="top"
-          className="text-xs rounded-lg p-5 w-[260px] bg-white shadow-lg"
-          sideOffset={5}
-        >
-          <div>Test 2</div>
-          <Arrow className="fill-white" />
-        </PopoverContent>
-      </Popover> */}
-
       <div className="items-center justify-center text-center pt-3 pb-5 w-[350px]">
         <div className="flex text-center justify-center items-center min-h-[80px]">
           {isStarted ? (
@@ -192,18 +167,6 @@ export default function Input({
       </div>
       <div className="mb-3 relative">
         <form onSubmit={checkAnswer} noValidate>
-          {/* <audio
-            className="hidden"
-            ref={correctRef}
-            preload="auto"
-            src={process.env.NEXT_PUBLIC_CORRECT_SOUND}
-          />
-          <audio
-            className="hidden"
-            ref={errorRef}
-            preload="auto"
-            src={process.env.NEXT_PUBLIC_ERROR_SOUND}
-          /> */}
           <div
             className={`${shakeEffect ? "animate-shake" : "animate-none"}`}
             onAnimationEnd={() => setShakeEffect(false)}
@@ -255,9 +218,6 @@ export default function Input({
               type="submit"
             >
               Submit
-              {/* <kbd className="text-[0.5rem] px-1.5 py-0.5 font-semibold text-gray-800 bg-gray-100 border border-gray-300 rounded-lg">
-                Enter
-              </kbd> */}
               <svg
                 width="15px"
                 height="15px"
@@ -309,8 +269,10 @@ export default function Input({
         setOpen={setGameEnded}
         gameWordsData={gameWordsData}
         setGameWordsData={setGameWordsData}
+        setCurrentWordIndex={setCurrentWordIndex}
         setInputValue={setInputValue}
         timesArray={timesArray}
+        gameEnded={gameEnded}
       />
     </section>
   );
