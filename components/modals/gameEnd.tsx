@@ -18,6 +18,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Arrow } from "@radix-ui/react-popover";
+import shuffleArray from "@/app/utils/shuffle-array";
 
 interface GameEndAlertProps {
   open: boolean;
@@ -30,6 +31,7 @@ interface GameEndAlertProps {
     isCorrect: boolean;
   }[];
   setGameWordsData: any;
+  setCurrentWordIndex: any;
   timesArray: number[];
   setInputValue: (arg0: string) => void;
   gameEnded: boolean;
@@ -40,13 +42,27 @@ export default function GameEndAlert({
   setOpen,
   gameWordsData,
   setGameWordsData,
+  setCurrentWordIndex,
   setInputValue,
   timesArray,
   gameEnded,
 }: GameEndAlertProps) {
-  const [correctAnswers, setCorrectAnswers] = useState<number>(0);
-  const [avgResponseTime, setAvgResponseTime] = useState<number>(0);
-  const [questionsSkipped, setQuestionsSkipped] = useState<number>(0);
+  const userCorrectAnswers = gameWordsData.reduce(
+    (total, x) => (x.isCorrect === true ? total + 1 : total),
+    0
+  );
+
+  const userAvgResponseTime =
+    Math.round(
+      (100 * timesArray.reduce((totalTime, x) => totalTime + x, 0)) /
+        timesArray.length /
+        1000
+    ) / 100;
+
+  const userQuestionsSkipped = gameWordsData.reduce(
+    (total, x) => (!x.isCorrect ? total + 1 : total),
+    0
+  );
 
   useEffect(() => {
     async function updateUserData(userScore: number, avgResponse: number) {
@@ -66,40 +82,16 @@ export default function GameEndAlert({
       if (!response.ok) console.log("error");
     }
 
-    const userCorrectAnswer = gameWordsData.reduce(
-      (total, x) => (x.isCorrect === true ? total + 1 : total),
-      0
-    );
-
-    // avg response sends to server, but does not get displayed in the modal
-    
-    const userAvgResponseTime =
-      Math.round(
-        (100 * timesArray.reduce((totalTime, x) => totalTime + x, 0)) /
-          timesArray.length /
-          1000
-      ) / 100;
-
-    console.log(userAvgResponseTime);
-
-    const userQuestionsSkipped = gameWordsData.reduce(
-      (total, x) => (!x.isCorrect ? total + 1 : total),
-      0
-    );
-
-    setCorrectAnswers(userCorrectAnswer);
-    setAvgResponseTime(userAvgResponseTime);
-    setQuestionsSkipped(userQuestionsSkipped);
-
     if (gameEnded && timesArray.length) {
-      updateUserData(userCorrectAnswer, userAvgResponseTime);
+      updateUserData(userCorrectAnswers, userAvgResponseTime);
     }
-
   }, [gameEnded, timesArray]);
 
   function resetGame() {
     setGameWordsData([]);
     setInputValue("");
+    setGameWordsData(shuffleArray(gameWordsData));
+    setCurrentWordIndex(0);
   }
 
   return (
@@ -115,39 +107,41 @@ export default function GameEndAlert({
                 <div
                   className={cn(
                     "flex flex-col justify-center items-center gap-y-3 w-1/3 text-center",
-                    correctAnswers == 0 ? "text-red-700 " : "text-green-700"
+                    userCorrectAnswers == 0 ? "text-red-700 " : "text-green-700"
                   )}
                 >
                   <h1 className="font-semibold">Correct Answers</h1>
-                  <p className="text-2xl font-semibold">{correctAnswers}</p>
+                  <p className="text-2xl font-semibold">{userCorrectAnswers}</p>
                 </div>
                 <div
                   className={cn(
                     "flex flex-col justify-center items-center gap-y-3 w-1/3 text-center",
-                    avgResponseTime < 6
+                    userAvgResponseTime < 6
                       ? "text-green-700 "
-                      : avgResponseTime < 8
+                      : userAvgResponseTime < 8
                       ? "text-yellow-600"
                       : "text-red-700"
                   )}
                 >
                   <h1 className="font-semibold">Avg Time</h1>
                   <p className="text-2xl font-semibold">
-                    {correctAnswers === 0 ? 0 : avgResponseTime}s
+                    {userCorrectAnswers === 0 ? 0 : userAvgResponseTime}s
                   </p>
                 </div>
                 <div
                   className={cn(
                     "flex flex-col justify-center items-center gap-y-3 w-1/3 text-center",
-                    questionsSkipped === 0
+                    userQuestionsSkipped === 0
                       ? "text-green-700"
-                      : questionsSkipped < 4
+                      : userQuestionsSkipped < 4
                       ? "text-yellow-600"
                       : "text-red-600"
                   )}
                 >
                   <h1 className="font-semibold">Skipped Words</h1>
-                  <p className="text-2xl font-semibold">{questionsSkipped}</p>
+                  <p className="text-2xl font-semibold">
+                    {userQuestionsSkipped}
+                  </p>
                 </div>
               </div>
               <div className="py-4">

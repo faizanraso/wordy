@@ -269,6 +269,7 @@ export default function Input({
         setOpen={setGameEnded}
         gameWordsData={gameWordsData}
         setGameWordsData={setGameWordsData}
+        setCurrentWordIndex={setCurrentWordIndex}
         setInputValue={setInputValue}
         timesArray={timesArray}
         gameEnded={gameEnded}
