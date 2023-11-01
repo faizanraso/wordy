@@ -1,7 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signIn, useSession, signOut } from "next-auth/react";
+import { fetcher } from "@/app/utils/fetcher";
+import useSWR from "swr";
+
+import { Button } from "@/components/ui/button";
+import { Icons } from "../icons/icons";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
@@ -10,18 +16,31 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import useSWR from "swr";
 
-import { Button } from "@/components/ui/button";
-import { Icons } from "../icons/icons";
-import { fetcher } from "@/app/utils/fetcher";
+interface UserData {
+  userGamesPlayed: number;
+  userHighScore: number;
+  userAvgScore: number;
+  userResponseTime: number;
+}
 
 export default function Profile() {
   const { data: session, status } = useSession();
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const [userStats, setUserStats] = useState<UserData>();
 
   const { data, isLoading, error } = useSWR("/api/getUserStats", fetcher);
+
+  useEffect(() => {
+    if (data) {
+      setUserStats({
+        userGamesPlayed: data.userGamesPlayed,
+        userHighScore: data.userHighScore,
+        userAvgScore: data.userAvgScore,
+        userResponseTime: data.userResponseTime,
+      });
+    }
+  }, [data]);
 
   function loginWithGithub() {
     setIsSigningIn(true);
