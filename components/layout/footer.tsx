@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="bg-transparent mt-auto border-t">
       <div className="relative mx-auto max-w-screen-xl px-8 py-8">
         <div className="flex items-end justify-between">
-          <div>
+          <div className="p-1">
             <p className="text-gray-500 text-xs font-medium">
               Made by Faizan Rasool
             </p>

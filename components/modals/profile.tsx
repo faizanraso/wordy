@@ -10,46 +10,30 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import useSWR from "swr";
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "../icons/icons";
+import { fetcher } from "@/app/utils/fetcher";
 
 export default function Profile() {
   const { data: session, status } = useSession();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSigningIn, setIsSigningIn] = useState(false);
+
+  const { data, isLoading, error } = useSWR("/api/getUserStats", fetcher);
 
   function loginWithGithub() {
-    setIsLoading(true);
+    setIsSigningIn(true);
     signIn("github", { callbackUrl: window.location.origin });
-    setIsLoading(false);
+    setIsSigningIn(false);
   }
 
   async function loginWithGoogle() {
-    setIsLoading(true);
+    setIsSigningIn(true);
     signIn("google", { callbackUrl: window.location.origin });
-    setIsLoading(false);
+    setIsSigningIn(false);
   }
-
-  const invoices = [
-    {
-      invoice: "Games Played",
-    },
-    {
-      invoice: "Highest Score",
-    },
-    {
-      invoice: "Average Score",
-    },
-  ];
 
   if (status !== "authenticated") {
     return (
@@ -83,10 +67,10 @@ export default function Profile() {
                   className="font-medium p-5"
                   variant="outline"
                   type="button"
-                  disabled={isLoading}
+                  disabled={isSigningIn}
                   onClick={() => loginWithGoogle()}
                 >
-                  {isLoading ? (
+                  {isSigningIn ? (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
                     <Icons.google className="mr-2 h-4 w-4" />
@@ -97,10 +81,10 @@ export default function Profile() {
                   className="font-medium p-5"
                   variant="outline"
                   type="button"
-                  disabled={isLoading}
+                  disabled={isSigningIn}
                   onClick={() => loginWithGithub()}
                 >
-                  {isLoading ? (
+                  {isSigningIn ? (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
                     <Icons.gitHub className="mr-2 h-4 w-4" />
@@ -144,11 +128,9 @@ export default function Profile() {
             <div className="flex flex-col items-center justify-center py-3 gap-y-5">
               <Table>
                 <TableBody>
-                  {invoices.map((invoice) => (
-                    <TableRow key={invoice.invoice}>
-                      <TableCell className="font-medium">
-                        {invoice.invoice}
-                      </TableCell>
+                  {rowNames.map((row) => (
+                    <TableRow key={row.row}>
+                      <TableCell className="font-medium">{row.row}</TableCell>
                       <TableCell className="font-medium">10</TableCell>
                     </TableRow>
                   ))}
