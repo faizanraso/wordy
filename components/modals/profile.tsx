@@ -39,6 +39,8 @@ export default function Profile() {
         userAvgScore: data.userAvgScore,
         userResponseTime: data.userResponseTime,
       });
+
+      console.log(data);
     }
   }, [data]);
 

@@ -11,7 +11,7 @@ export async function GET(req: Request) {
         where: { email: session.user?.email },
       });
 
-      NextResponse.json({
+      return NextResponse.json({
         userGamesPlayed: userInfo?.gamesPlayed,
         userHighScore: userInfo?.highScore,
         userAvgScore: userInfo?.avgScore,
