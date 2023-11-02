@@ -147,12 +147,32 @@ export default function Profile() {
             <div className="flex flex-col items-center justify-center py-3 gap-y-5">
               <Table>
                 <TableBody>
-                  {rowNames.map((row) => (
-                    <TableRow key={row.row}>
-                      <TableCell className="font-medium">{row.row}</TableCell>
-                      <TableCell className="font-medium">10</TableCell>
-                    </TableRow>
-                  ))}
+                  <TableRow>
+                    <TableCell className="font-medium">Games Played</TableCell>
+                    <TableCell className="font-medium">
+                      {userStats?.userGamesPlayed}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">High Score</TableCell>
+                    <TableCell className="font-medium">
+                      {userStats?.userHighScore}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Average Score</TableCell>
+                    <TableCell className="font-medium">
+                      {userStats?.userAvgScore}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">
+                      Average Response Time
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {userStats?.userResponseTime}
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
               <Button
