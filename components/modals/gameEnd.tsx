@@ -92,6 +92,7 @@ export default function GameEndAlert({
     setInputValue("");
     setGameWordsData(shuffleArray(gameWordsData));
     setCurrentWordIndex(0);
+    setGameWordsData([]);
   }
 
   return (

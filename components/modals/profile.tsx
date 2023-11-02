@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { signIn, useSession, signOut } from "next-auth/react";
 import { fetcher } from "@/app/utils/fetcher";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "../icons/icons";
@@ -29,6 +29,7 @@ export default function Profile() {
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [userStats, setUserStats] = useState<UserData>();
 
+  const { mutate } = useSWRConfig();
   const { data, isLoading, error } = useSWR("/api/getUserStats", fetcher);
 
   useEffect(() => {
@@ -39,8 +40,6 @@ export default function Profile() {
         userAvgScore: data.userAvgScore,
         userResponseTime: data.userResponseTime,
       });
-
-      console.log(data);
     }
   }, [data]);
 
@@ -122,7 +121,7 @@ export default function Profile() {
 
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger onClick={() => mutate("/api/getUserStats")}>
         <svg
           width={32}
           height={32}
@@ -150,20 +149,22 @@ export default function Profile() {
               <Table>
                 <TableBody>
                   <TableRow>
-                    <TableCell className="font-medium">Games Played</TableCell>
                     <TableCell className="font-medium">
+                      Total Games Played
+                    </TableCell>
+                    <TableCell className="font-medium text-right px-3">
                       {userStats?.userGamesPlayed}
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell className="font-medium">High Score</TableCell>
-                    <TableCell className="font-medium">
+                    <TableCell className="font-medium text-right px-3">
                       {userStats?.userHighScore}
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell className="font-medium">Average Score</TableCell>
-                    <TableCell className="font-medium">
+                    <TableCell className="font-medium text-right px-3">
                       {userStats?.userAvgScore}
                     </TableCell>
                   </TableRow>
@@ -171,8 +172,8 @@ export default function Profile() {
                     <TableCell className="font-medium">
                       Average Response Time
                     </TableCell>
-                    <TableCell className="font-medium">
-                      {userStats?.userResponseTime}
+                    <TableCell className="font-medium text-right px-3">
+                      {userStats?.userResponseTime}s
                     </TableCell>
                   </TableRow>
                 </TableBody>
