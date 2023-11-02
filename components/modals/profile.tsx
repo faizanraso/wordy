@@ -1,7 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signIn, useSession, signOut } from "next-auth/react";
+import { fetcher } from "@/app/utils/fetcher";
+import useSWR, { useSWRConfig } from "swr";
+
+import { Button } from "@/components/ui/button";
+import { Icons } from "../icons/icons";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
@@ -10,46 +16,44 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
-import { Button } from "@/components/ui/button";
-import { Icons } from "../icons/icons";
+interface UserData {
+  userGamesPlayed: number;
+  userHighScore: number;
+  userAvgScore: number;
+  userResponseTime: number;
+}
 
 export default function Profile() {
   const { data: session, status } = useSession();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSigningIn, setIsSigningIn] = useState(false);
+  const [userStats, setUserStats] = useState<UserData>();
+
+  const { mutate } = useSWRConfig();
+  const { data, isLoading, error } = useSWR("/api/getUserStats", fetcher);
+
+  useEffect(() => {
+    if (data) {
+      setUserStats({
+        userGamesPlayed: data.userGamesPlayed,
+        userHighScore: data.userHighScore,
+        userAvgScore: data.userAvgScore,
+        userResponseTime: data.userResponseTime,
+      });
+    }
+  }, [data]);
 
   function loginWithGithub() {
-    setIsLoading(true);
+    setIsSigningIn(true);
     signIn("github", { callbackUrl: window.location.origin });
-    setIsLoading(false);
+    setIsSigningIn(false);
   }
 
   async function loginWithGoogle() {
-    setIsLoading(true);
+    setIsSigningIn(true);
     signIn("google", { callbackUrl: window.location.origin });
-    setIsLoading(false);
+    setIsSigningIn(false);
   }
-
-  const invoices = [
-    {
-      invoice: "Games Played",
-    },
-    {
-      invoice: "Highest Score",
-    },
-    {
-      invoice: "Average Score",
-    },
-  ];
 
   if (status !== "authenticated") {
     return (
@@ -83,10 +87,10 @@ export default function Profile() {
                   className="font-medium p-5"
                   variant="outline"
                   type="button"
-                  disabled={isLoading}
+                  disabled={isSigningIn}
                   onClick={() => loginWithGoogle()}
                 >
-                  {isLoading ? (
+                  {isSigningIn ? (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
                     <Icons.google className="mr-2 h-4 w-4" />
@@ -97,10 +101,10 @@ export default function Profile() {
                   className="font-medium p-5"
                   variant="outline"
                   type="button"
-                  disabled={isLoading}
+                  disabled={isSigningIn}
                   onClick={() => loginWithGithub()}
                 >
-                  {isLoading ? (
+                  {isSigningIn ? (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
                     <Icons.gitHub className="mr-2 h-4 w-4" />
@@ -117,7 +121,7 @@ export default function Profile() {
 
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger onClick={() => mutate("/api/getUserStats")}>
         <svg
           width={32}
           height={32}
@@ -144,14 +148,34 @@ export default function Profile() {
             <div className="flex flex-col items-center justify-center py-3 gap-y-5">
               <Table>
                 <TableBody>
-                  {invoices.map((invoice) => (
-                    <TableRow key={invoice.invoice}>
-                      <TableCell className="font-medium">
-                        {invoice.invoice}
-                      </TableCell>
-                      <TableCell className="font-medium">10</TableCell>
-                    </TableRow>
-                  ))}
+                  <TableRow>
+                    <TableCell className="font-medium">
+                      Total Games Played
+                    </TableCell>
+                    <TableCell className="font-medium text-right px-3">
+                      {userStats?.userGamesPlayed}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">High Score</TableCell>
+                    <TableCell className="font-medium text-right px-3">
+                      {userStats?.userHighScore}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Average Score</TableCell>
+                    <TableCell className="font-medium text-right px-3">
+                      {userStats?.userAvgScore}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">
+                      Average Response Time
+                    </TableCell>
+                    <TableCell className="font-medium text-right px-3">
+                      {userStats?.userResponseTime}s
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
               <Button
