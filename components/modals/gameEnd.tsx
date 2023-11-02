@@ -32,6 +32,8 @@ interface GameEndAlertProps {
   }[];
   setGameWordsData: any;
   setCurrentWordIndex: any;
+  allWords: any;
+  setAllWords: any;
   timesArray: number[];
   setInputValue: (arg0: string) => void;
   gameEnded: boolean;
@@ -42,6 +44,8 @@ export default function GameEndAlert({
   setOpen,
   gameWordsData,
   setGameWordsData,
+  allWords,
+  setAllWords,
   setCurrentWordIndex,
   setInputValue,
   timesArray,
@@ -88,9 +92,8 @@ export default function GameEndAlert({
   }, [gameEnded, timesArray]);
 
   function resetGame() {
-    setGameWordsData([]);
     setInputValue("");
-    setGameWordsData(shuffleArray(gameWordsData));
+    setAllWords(shuffleArray(allWords));
     setCurrentWordIndex(0);
     setGameWordsData([]);
   }
