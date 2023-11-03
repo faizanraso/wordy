@@ -18,7 +18,7 @@ export default function LeaderboardTable({
 }: LeaderboardTableProps) {
   return (
     <div className="flex flex-col items-center justify-center py-3 gap-y-5">
-      <Table className="w-[400px] border-b border-t">
+      <Table className="border-b border-t">
         <TableBody className="w-full">
           {leaderboardData.map((leaderboardRecord, index) => (
             <TableRow className="w-[400px]" key={leaderboardRecord.name}>

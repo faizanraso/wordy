@@ -100,7 +100,10 @@ export default function Stats() {
                   </TabsContent>
                 </>
               ) : (
-                <p>Loading</p>
+                <div className="py-8">
+                  {" "}
+                  <p>Loading...</p>
+                </div>
               )}
             </Tabs>
           </DialogDescription>
