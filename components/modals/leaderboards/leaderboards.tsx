@@ -16,8 +16,15 @@ import LeaderboardTable from "./leaderboard-table";
 import useSWR from "swr";
 import { fetcher } from "@/app/utils/fetcher";
 
+type APIRecordData = {
+  highScoreData: { name: string; highScore: number }[];
+  avgScoreData: { name: string; avgScore: number }[];
+  avgResponseTimeData: { name: string; avgResponseTime: number }[];
+};
+
 export default function Stats() {
-  const [allLeaderboardData, setAllLeaderboardData] = useState();
+  const [allLeaderboardData, setAllLeaderboardData] =
+    useState<APIRecordData | null>();
   const { data, error, isLoading } = useSWR("/api/getLeaderboardData", fetcher);
 
   useEffect(() => {
@@ -70,15 +77,25 @@ export default function Stats() {
                   Avg Response Time
                 </TabsTrigger>
               </TabsList>
-              <TabsContent value="highest-score">
-                {/* <LeaderboardTable leaderboardData={} /> */}
-              </TabsContent>
-              <TabsContent value="avg-score">
-                Change your password here.
-              </TabsContent>
-              <TabsContent value="avg-response-time">
-                Change your password here.
-              </TabsContent>
+              {allLeaderboardData ? (
+                <>
+                  {" "}
+                  <TabsContent value="highest-score">
+                    <LeaderboardTable
+                      leaderboardData={allLeaderboardData.highScoreData}
+                      type="highest-score"
+                    />
+                  </TabsContent>
+                  <TabsContent value="avg-score">
+                    Change your password here.
+                  </TabsContent>
+                  <TabsContent value="avg-response-time">
+                    Change your password here.
+                  </TabsContent>
+                </>
+              ) : (
+                <p>Loading</p>
+              )}
             </Tabs>
           </DialogDescription>
         </DialogHeader>
