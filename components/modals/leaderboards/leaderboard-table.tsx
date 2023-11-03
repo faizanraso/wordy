@@ -21,7 +21,7 @@ export default function LeaderboardTable({
       <Table className="w-[400px] border-b border-t">
         <TableBody className="w-full">
           {leaderboardData.map((leaderboardRecord, index) => (
-            <TableRow className="w-[400px]">
+            <TableRow className="w-[400px]" key={leaderboardRecord.name}>
               <TableCell className="font-medium gap-x-2">
                 {index + 1}. {leaderboardRecord.name}
               </TableCell>
