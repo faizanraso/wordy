@@ -1,6 +1,9 @@
 "use client";
 
 import React from "react";
+import { useSession } from "next-auth/react";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Dialog,
   DialogContent,
@@ -9,7 +12,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useSession } from "next-auth/react";
 
 export default function Stats() {
   const { data: session, status } = useSession();
@@ -38,14 +40,34 @@ export default function Stats() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Leaderboard</DialogTitle>
-          {status !== "authenticated" ? (
-            <DialogDescription>
-              You must login to view the leaderboard
-            </DialogDescription>
-          ) : (
-            <DialogDescription>Logged In</DialogDescription>
-          )}
+          <DialogTitle>Leaderboards</DialogTitle>
+          <DialogDescription className="flex items-center justify-center mx-autos">
+            <Tabs
+              defaultValue="highest-score"
+              className="justify-center items-center mx-auto flex flex-col py-4"
+            >
+              <TabsList>
+                <TabsTrigger value="highest-score" className="text-xs">
+                  Highest Score
+                </TabsTrigger>
+                <TabsTrigger value="avg-score" className="text-xs">
+                  Avg Score
+                </TabsTrigger>
+                <TabsTrigger value="avg-response-time" className="text-xs">
+                  Avg Response Time
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="highest-score">
+                Make changes to your account here.
+              </TabsContent>
+              <TabsContent value="avg-score">
+                Change your password here.
+              </TabsContent>
+              <TabsContent value="avg-response-time">
+                Change your password here.
+              </TabsContent>
+            </Tabs>
+          </DialogDescription>
         </DialogHeader>
       </DialogContent>
     </Dialog>

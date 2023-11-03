@@ -52,6 +52,8 @@ export default function GameEndAlert({
   timesArray,
   gameEnded,
 }: GameEndAlertProps) {
+  const { mutate } = useSWRConfig();
+
   const userCorrectAnswers = gameWordsData.reduce(
     (total, x) => (x.isCorrect === true ? total + 1 : total),
     0
@@ -91,8 +93,6 @@ export default function GameEndAlert({
       updateUserData(userCorrectAnswers, userAvgResponseTime);
     }
   }, [gameEnded, timesArray]);
-
-  const { mutate } = useSWRConfig();
 
   function resetGame() {
     setInputValue("");
