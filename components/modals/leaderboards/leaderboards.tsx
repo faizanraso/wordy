@@ -87,10 +87,16 @@ export default function Stats() {
                     />
                   </TabsContent>
                   <TabsContent value="avg-score">
-                    Change your password here.
+                    <LeaderboardTable
+                      leaderboardData={allLeaderboardData.avgScoreData}
+                      type="avg-score"
+                    />
                   </TabsContent>
                   <TabsContent value="avg-response-time">
-                    Change your password here.
+                    <LeaderboardTable
+                      leaderboardData={allLeaderboardData.avgResponseTimeData}
+                      type="avg-response-score"
+                    />
                   </TabsContent>
                 </>
               ) : (
