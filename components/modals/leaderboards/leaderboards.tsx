@@ -47,13 +47,16 @@ export default function Stats() {
               className="justify-center items-center mx-auto flex flex-col py-4"
             >
               <TabsList>
-                <TabsTrigger value="highest-score" className="text-xs">
+                <TabsTrigger value="highest-score" className="text-[0.6rem]">
                   Highest Score
                 </TabsTrigger>
-                <TabsTrigger value="avg-score" className="text-xs">
+                <TabsTrigger value="avg-score" className="text-[0.6rem]">
                   Avg Score
                 </TabsTrigger>
-                <TabsTrigger value="avg-response-time" className="text-xs">
+                <TabsTrigger
+                  value="avg-response-time"
+                  className="text-[0.6rem]"
+                >
                   Avg Response Time
                 </TabsTrigger>
               </TabsList>

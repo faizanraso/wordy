@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { signIn, useSession, signOut } from "next-auth/react";
 import { fetcher } from "@/app/utils/fetcher";
-import useSWR, { useSWRConfig } from "swr";
+import useSWR from "swr";
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "../icons/icons";
