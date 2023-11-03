@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -12,9 +12,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import LeaderboardTable from "./leaderboard-table";
+import useSWR from "swr";
+import { fetcher } from "@/app/utils/fetcher";
 
 export default function Stats() {
-  const { data: session, status } = useSession();
+  const [allLeaderboardData, setAllLeaderboardData] = useState();
+  const { data, error, isLoading } = useSWR("/api/getLeaderboardData", fetcher);
+
+  useEffect(() => {
+    if (data) {
+      setAllLeaderboardData(data);
+    }
+  }, [data]);
 
   return (
     <Dialog>
@@ -61,7 +71,7 @@ export default function Stats() {
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="highest-score">
-                Make changes to your account here.
+                {/* <LeaderboardTable leaderboardData={} /> */}
               </TabsContent>
               <TabsContent value="avg-score">
                 Change your password here.
