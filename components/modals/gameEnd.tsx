@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/popover";
 import { Arrow } from "@radix-ui/react-popover";
 import shuffleArray from "@/app/utils/shuffle-array";
+import { useSWRConfig } from "swr";
 
 interface GameEndAlertProps {
   open: boolean;
@@ -51,6 +52,8 @@ export default function GameEndAlert({
   timesArray,
   gameEnded,
 }: GameEndAlertProps) {
+  const { mutate } = useSWRConfig();
+
   const userCorrectAnswers = gameWordsData.reduce(
     (total, x) => (x.isCorrect === true ? total + 1 : total),
     0
@@ -96,6 +99,7 @@ export default function GameEndAlert({
     setAllWords(shuffleArray(allWords));
     setCurrentWordIndex(0);
     setGameWordsData([]);
+    mutate("/api/getUserStats");
   }
 
   return (

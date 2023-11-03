@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 import Info from "../modals/info";
-import Stats from "../modals/stats";
+import Stats from "../modals/leaderboards/leaderboards";
 import Profile from "../modals/profile";
 import "@/public/logo.png";
 

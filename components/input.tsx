@@ -48,7 +48,7 @@ export default function Input({
   const inputRef = useRef<HTMLInputElement>(null);
   let reset: NodeJS.Timeout | undefined;
 
-  const { data, error, isLoading } = useSWR("/api/getLevel", fetcher);
+  const { data, error, isLoading } = useSWR("/api/getLevels", fetcher);
 
   useEffect(() => {
     if (data) setAllWords(shuffleArray(data));
