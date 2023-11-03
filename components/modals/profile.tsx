@@ -28,8 +28,6 @@ export default function Profile() {
   const { data: session, status } = useSession();
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [userStats, setUserStats] = useState<UserData>();
-
-  const { mutate } = useSWRConfig();
   const { data, isLoading, error } = useSWR("/api/getUserStats", fetcher);
 
   useEffect(() => {
@@ -121,7 +119,7 @@ export default function Profile() {
 
   return (
     <Dialog>
-      <DialogTrigger onClick={() => mutate("/api/getUserStats")}>
+      <DialogTrigger>
         <svg
           width={32}
           height={32}
