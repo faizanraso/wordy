@@ -214,29 +214,6 @@ export default function Input({
           </div>
           <div className="flex items-center justify-center pt-3 gap-x-3">
             <button
-              className="shadow-inner py-2.5 px-10 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:opacity-40 items-center justify-center"
-              type="submit"
-            >
-              Submit
-              <svg
-                width="15px"
-                height="15px"
-                viewBox="0 0 24 24"
-                strokeWidth="2.5"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                color="#000000"
-              >
-                <path
-                  d="M3 12h18m0 0l-8.5-8.5M21 12l-8.5 8.5"
-                  stroke="#000000"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                ></path>
-              </svg>
-            </button>
-            <button
               disabled={!isStarted}
               className="py-2.5 px-3 bg-yellow-400 hover:bg-yellow-500 rounded-lg text-black text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-yellow-400 disabled:hover:bg-yellow-400 disabled:opacity-40 items-center justify-center"
               onClick={handleSkip}
@@ -257,6 +234,29 @@ export default function Input({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   d="M18 7v10M6.972 5.267A.6.6 0 0 0 6 5.738v12.524a.6.6 0 0 0 .972.47l7.931-6.261a.6.6 0 0 0 0-.942L6.972 5.267Z"
+                ></path>
+              </svg>
+            </button>
+            <button
+              className="shadow-inner py-2.5 px-10 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:opacity-40 items-center justify-center"
+              type="submit"
+            >
+              Submit
+              <svg
+                width="15px"
+                height="15px"
+                viewBox="0 0 24 24"
+                strokeWidth="2.5"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                color="#000000"
+              >
+                <path
+                  d="M3 12h18m0 0l-8.5-8.5M21 12l-8.5 8.5"
+                  stroke="#000000"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 ></path>
               </svg>
             </button>
