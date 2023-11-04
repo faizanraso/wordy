@@ -23,3 +23,9 @@ https://wordy-game.vercel.app/
   <li>Tailwind CSS</li>
   <li>Shadcn/Radix UI</li>
 </ul>
+
+
+### Demo
+
+https://github.com/faizanraso/wordy/assets/59986120/ecdb1fb6-364e-4383-9aab-475ba0dde1fb
+
