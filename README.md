@@ -7,9 +7,9 @@ https://wordy-game.vercel.app/
 
 ### Features:
 <ol>
-  <li>**User Authentication:**Sign in using OAuth for a personalized gaming experience.</li>
-  <li>**Leaderboards:** Compete with other players to see who has the highest score.</li>
-  <li>**Personal Stats:** Keep track of your performance with features like high score, average score, and average response time.</li>
+  <li><strong>User Authentication: </strong>Sign in using OAuth for a personalized gaming experience.</li>
+  <li><strong>Leaderboards: </strong>Compete with other players to see who has the highest score.</li>
+  <li><strong>Personal Stats: </strong>Keep track of your performance with features like high score, average score, and average response time.</li>
 </ol>
 
 
