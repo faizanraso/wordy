@@ -217,6 +217,7 @@ export default function Input({
               disabled={!isStarted}
               className="py-2.5 px-3 bg-yellow-400 hover:bg-yellow-500 rounded-lg text-black text-xs font-semibold inline-flex gap-x-1 transition duration-150 disabled:bg-yellow-400 disabled:hover:bg-yellow-400 disabled:opacity-40 items-center justify-center"
               onClick={handleSkip}
+              type="button"
             >
               Skip
               <svg
